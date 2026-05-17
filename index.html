@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>厦门金奕鸣科技有限公司 - 技术研发专家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        /* Hero区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(45deg, #00d4ff, #00ff88);
+            color: #0a0e27;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        /* 内容区块 */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* 关于我们 */
+        #about {
+            background: #0f1429;
+        }
+
+        #about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #c0c0c0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 服务项目 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: #1a1f3a;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d4ff;
+        }
+
+        .service-card h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #a0a0a0;
+        }
+
+        /* 技术栈 */
+        #tech {
+            background: #0f1429;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-item {
+            background: #1a1f3a;
+            padding: 1.5rem 2rem;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        /* 联系方式 */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            background: #1a1f3a;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .contact-item h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item p {
+            color: #a0a0a0;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0e27;
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            color: #a0a0a0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                justify-content: center;
+            }
+
+            section {
+                padding: 3rem 5%;
+            }
+        }
+
+        /* 代码高亮风格 */
+        .code-snippet {
+            background: #0a0e27;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#services">服务项目</a></li>
+            <li><a href="#tech">技术栈</a></li>
+            <li><a href="#contact">联系方式</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>厦门金奕鸣科技有限公司</h1>
+            <p>技术研发 · 软件开发 · 解决方案</p>
+            <a href="#contact" class="cta-button">联系我们</a>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about">
+        <h2>关于我们</h2>
+        <p>
+            厦门金奕鸣科技有限公司是一家专注于技术研发和软件开发的一人科技有限公司，致力于为客户提供高质量的技术解决方案。
+            我们拥有多年的行业经验和专业技术能力，擅长运用AI技术（ChatGPT、Codex等）赋能软件开发，提高交付效率。
+            公司业务涵盖定制软件开发、AI技术咨询、UI/UX设计、技术顾问等领域，以零成本运营模式和专业技术能力，
+            为每位客户创造最大价值。
+        </p>
+        
+        <div class="code-snippet">
+            <pre>
+// 我们的使命
+const mission = "用技术创造价值";
+const vision = "让AI成为每个开发者的助手";
+
+function deliverValue(clientNeeds) {
+    return analyzeRequirements(clientNeeds)
+        .then(designSolution)
+        .then(developWithAI)
+        .then(deployAndMaintain);
+}
+            </pre>
+        </div>
+    </section>
+
+    <!-- 服务项目 -->
+    <section id="services">
+        <h2>服务项目</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>💻 定制软件开发</h3>
+                <p>根据客户需求，提供定制化的软件开发服务，包括Web应用、移动应用、桌面应用等。</p>
+            </div>
+            <div class="service-card">
+                <h3>🤖 AI技术咨询</h3>
+                <p>为客户提供AI技术应用咨询，包括ChatGPT集成、自动化流程设计、AI工具选型等。</p>
+            </div>
+            <div class="service-card">
+                <h3>🎨 UI/UX设计</h3>
+                <p>提供专业的用户界面和用户体验设计服务，确保产品既美观又易用。</p>
+            </div>
+            <div class="service-card">
+                <h3>📊 技术顾问</h3>
+                <p>为企业提供技术架构咨询、技术选型建议、代码审查等技术服务。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术栈 -->
+    <section id="tech">
+        <h2>技术栈</h2>
+        <div class="tech-stack">
+            <div class="tech-item">Python</div>
+            <div class="tech-item">JavaScript/TypeScript</div>
+            <div class="tech-item">Node.js</div>
+            <div class="tech-item">React/Vue</div>
+            <div class="tech-item">FastAPI</div>
+            <div class="tech-item">PostgreSQL</div>
+            <div class="tech-item">MongoDB</div>
+            <div class="tech-item">Git/GitHub</div>
+            <div class="tech-item">Docker</div>
+            <div class="tech-item">AWS/阿里云</div>
+            <div class="tech-item">ChatGPT/AI工具</div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact">
+        <h2>联系方式</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <h3>📧 邮箱</h3>
+                <p>xmwcg@163.com</p>
+            </div>
+            <div class="contact-item">
+                <h3>📱 电话</h3>
+                <p>13599530881（王先生）</p>
+            </div>
+            <div class="contact-item">
+                <h3>🏢 地址</h3>
+                <p>厦门海沧区海发路135号933室</p>
+            </div>
+            <div class="contact-item">
+                <h3>🌐 GitHub</h3>
+                <p>github.com/xmwcg</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 厦门金奕鸣科技有限公司. All rights reserved. | 一人科技有限公司</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">用AI赋能开发 · 用技术驱动创新</p>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 导航栏高亮
+        window.addEventListener('scroll', function() {
+            let sections = document.querySelectorAll('section');
+            let navLinks = document.querySelectorAll('nav a');
+            
+            sections.forEach(section => {
+                let top = section.offsetTop - 100;
+                let height = section.offsetHeight;
+                let id = section.getAttribute('id');
+                
+                if (window.scrollY >= top && window.scrollY < top + height) {
+                    navLinks.forEach(link => {
+                        link.style.color = '#e0e0e0';
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.style.color = '#00d4ff';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
