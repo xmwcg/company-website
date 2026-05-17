@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>厦门金奕鸣科技有限公司 - 现代科技风</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==================== CSS Variables ==================== */
+    :root {
+      --primary: #0066FF;
+      --primary-light: #3385FF;
+      --primary-dark: #0052CC;
+      --secondary: #00D4AA;
+      --accent: #7C3AED;
+      --background: #0A0F1C;
+      --surface: #111827;
+      --surface-light: #1F2937;
+      --text-primary: #FFFFFF;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --gradient-1: linear-gradient(135deg, #0066FF 0%, #00D4AA 100%);
+      --gradient-2: linear-gradient(135deg, #7C3AED 0%, #0066FF 50%, #00D4AA 100%);
+      --shadow-glow: 0 0 40px rgba(0, 102, 255, 0.3);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    /* ==================== Reset & Base ==================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ==================== Particle Background ==================== */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ==================== Navigation ==================== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 15, 28, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      border: none;
+      color: white;
+      box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 102, 255, 0.5);
+    }
+
+    /* ==================== Hero Section ==================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 5% 4rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 212, 170, 0.1);
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--secondary);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(180deg, #FFFFFF 0%, #9CA3AF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero h1 span {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-large {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    /* ==================== Features Section ==================== */
+    .section {
+      position: relative;
+      padding: 6rem 5%;
+      z-index: 10;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all 0.4s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gradient-1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ==================== Services Section ==================== */
+    .services {
+      background: linear-gradient(180deg, transparent 0%, rgba(17, 24, 39, 0.5) 100%);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      background: var(--surface-light);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ==================== CTA Section ==================== */
+    .cta {
+      text-align: center;
+      padding: 8rem 5%;
+      position: relative;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 10;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ==================== Footer ==================== */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 4rem 5%;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(10, 15, 28, 0.9);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .logo {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .footer-links h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ==================== Mobile Responsive ==================== */
+    @media (max-width: 768px) {
+      .nav-links, .nav-buttons { display: none; }
+      
+      .hero { padding: 6rem 5% 3rem; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      
+      .features-grid { grid-template-columns: 1fr; }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Background Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">金奕鸣科技</div>
+    <ul class="nav-links">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#services">服务项目</a></li>
+      <li><a href="#features">核心优势</a></li>
+      <li><a href="#contact">联系我们</a></li>
+    </ul>
+    <div class="nav-buttons">
+      <a href="#" class="btn btn-ghost">登录</a>
+      <a href="#" class="btn btn-primary">立即咨询</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-badge">AI 驱动的技术创新</div>
+      <h1>用<span>智能科技</span><br>创造商业价值</h1>
+      <p>厦门金奕鸣科技专注于AI应用开发与数字化转型解决方案，助力企业快速拥抱智能时代，实现业务增长与效率提升。</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary btn-large">免费试用</a>
+        <a href="#" class="btn btn-ghost btn-large">了解更多</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="section-header">
+      <p class="section-label">核心优势</p>
+      <h2 class="section-title">为什么选择我们</h2>
+      <p class="section-desc">专业团队 + 成熟技术 + 成功案例，为您的数字化转型保驾护航</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h3>快速交付</h3>
+        <p>敏捷开发流程，缩短项目周期，从需求到上线平均周期缩短60%，让您更快抢占市场先机。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>AI 深度集成</h3>
+        <p>自研AI算法与主流大模型深度整合，提供智能客服、数据分析、自动化流程等解决方案。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>安全可靠</h3>
+        <p>企业级安全架构，数据加密传输与存储，ISO27001认证，确保您的商业数据安全无忧。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section services" id="services">
+    <div class="section-header">
+      <p class="section-label">服务项目</p>
+      <h2 class="section-title">全方位解决方案</h2>
+      <p class="section-desc">覆盖企业数字化转型的全生命周期需求</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <h3>智能客服系统</h3>
+        <p>7x24小时AI客服</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>数据可视化</h3>
+        <p>实时数据大屏</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <h3>流程自动化</h3>
+        <p>RPA智能机器人</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>移动应用开发</h3>
+        <p>iOS & Android</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>企业官网</h3>
+        <p>品牌展示官网</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">☁️</div>
+        <h3>云服务部署</h3>
+        <p>弹性扩容方案</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta" id="contact">
+    <div class="cta-content">
+      <h2>准备好开启您的数字化转型之旅了吗？</h2>
+      <p>联系我们，获取专业咨询与定制化解决方案，让AI成为您业务增长的新引擎。</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary btn-large">预约咨询</a>
+        <a href="#" class="btn btn-ghost btn-large">电话联系</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo">金奕鸣科技</span>
+        <p>厦门金奕鸣科技有限公司<br>用技术创造价值，让AI成为每个企业的助手</p>
+      </div>
+      <div class="footer-links">
+        <h4>产品服务</h4>
+        <ul>
+          <li><a href="#">智能客服</a></li>
+          <li><a href="#">数据分析</a></li>
+          <li><a href="#">流程自动化</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>关于公司</h4>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">成功案例</a></li>
+          <li><a href="#">新闻动态</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>联系我们</h4>
+        <ul>
+          <li><a href="#">电话: 13599530881</a></li>
+          <li><a href="#">邮箱: xmwcg@163.com</a></li>
+          <li><a href="#">地址: 厦门海沧区</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 厦门金奕鸣科技有限公司 版权所有 | 闽ICP备XXXXXXXX号</p>
+    </div>
+  </footer>
+
+  <!-- Particle Animation Script -->
+  <script>
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 80;
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 2 + 1,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+    
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 102, 255, ${p.alpha})`;
+        ctx.fill();
+        
+        // Draw connections
+        particles.forEach((p2, j) => {
+          if (i === j) return;
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(0, 102, 255, ${0.1 * (1 - dist / 150)})`;
+            ctx.stroke();
+          }
+        });
+      });
+      
+      requestAnimationFrame(drawParticles);
+    }
+    
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createParticles();
+    });
+    
+    resizeCanvas();
+    createParticles();
+    drawParticles();
+  </script>
+</body>
+</html>
