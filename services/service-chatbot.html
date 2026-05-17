@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能客服系统 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="基于大语言模型的智能客服解决方案，7×24小时即时响应，精准理解用户意图，大幅降低人力成本">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    /* 导航 */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    /* 页面头部 */
+    .page-header {
+      padding: 8rem 2rem 5rem;
+      background: var(--primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '💬';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.08;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      position: relative;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--text-muted); }
+    /* 主内容区 */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    /* 功能特点 */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    /* 详情描述 */
+    .detail-block {
+      background: var(--surface);
+      padding: 3rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+    }
+    .detail-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .detail-block p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    .detail-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .detail-list li {
+      padding: 1rem;
+      background: var(--background);
+      border-radius: var(--radius);
+      padding-left: 2.5rem;
+      position: relative;
+    }
+    .detail-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 1rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    /* 应用场景 */
+    .scenarios-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .scenario-card {
+      background: var(--primary);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      color: white;
+    }
+    .scenario-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .scenario-card p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+    /* 价格方案 */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .pricing-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      border-radius: var(--radius-md);
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .pricing-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+    .pricing-card.featured {
+      border: 2px solid var(--accent);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: '推荐方案';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .pricing-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .pricing-price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .pricing-price span {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+    .pricing-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+    .pricing-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    /* 案例展示 */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .case-header {
+      background: var(--primary);
+      padding: 2rem;
+      text-align: center;
+    }
+    .case-header span {
+      font-size: 3rem;
+    }
+    .case-body {
+      padding: 1.5rem;
+    }
+    .case-body h4 {
+      margin-bottom: 0.8rem;
+    }
+    .case-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .case-stat {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .case-stat span {
+      text-align: center;
+    }
+    .case-stat strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+    .case-stat small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    /* 咨询区域 */
+    .contact-section {
+      background: var(--primary);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .contact-section p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+    }
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: white;
+      color: var(--primary);
+    }
+    .btn-white:hover {
+      background: var(--accent);
+    }
+    /* 页脚 */
+    footer {
+      background: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .detail-list { grid-template-columns: 1fr; }
+      .scenarios-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+    }
+    /* 浮动导航 */
+    .float-nav {
+      position: fixed;
+      right: 20px;
+      bottom: 100px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .float-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-md);
+    }
+    .float-nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <nav>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../products.html" class="active">产品服务</a></li>
+        <li><a href="../about.html">关于我们</a></li>
+        <li><a href="../legal.html">法律信息</a></li>
+        <li><a href="../platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <h1>智能客服系统</h1>
+    <p>基于大语言模型的AI客服，7×24小时即时响应，精准理解用户意图</p>
+  </div>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-container">
+      <a href="../index.html">首页</a>
+      <span>/</span>
+      <a href="../products.html">产品服务</a>
+      <span>/</span>
+      <span>智能客服系统</span>
+    </div>
+  </div>
+
+  <!-- 产品介绍 -->
+  <div class="section">
+    <div class="detail-block">
+      <h3>产品简介</h3>
+      <p>智能客服系统是一款基于大语言模型（LLM）的企业级客服解决方案，能够自动理解客户咨询意图，提供精准、专业的即时响应。系统支持多渠道接入，涵盖网站、APP、微信公众号、企业微信等多个平台，帮助企业实现全天候客户服务的智能化升级。</p>
+      <p>区别于传统关键词匹配的客服机器人，我们的智能客服系统具备深度语义理解能力，能够准确捕捉用户真实需求，即使面对复杂、模糊的自然语言表达，也能给出恰当的回复。同时，系统支持人工坐席无缝接管，确保复杂问题得到专业处理。</p>
+    </div>
+  </div>
+
+  <!-- 核心功能 -->
+  <div class="section" style="background: var(--surface); padding-top: 0;">
+    <div class="section-title">
+      <h2>核心功能</h2>
+      <p>全方位智能客服能力，覆盖企业客户服务全场景</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>多渠道统一接入</h3>
+        <p>支持网站、APP、微信、企微、抖音、小程序等全渠道接入，一个后台统一管理所有客户咨询</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>深度语义理解</h3>
+        <p>基于大语言模型，准确理解用户真实意图，即使表达模糊、口语化也能精准识别</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>智能知识库</h3>
+        <p>支持上传产品文档、FAQ等素材，系统自动学习并持续优化回复质量</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👨‍💼</div>
+        <h3>人机协作模式</h3>
+        <p>AI无法解答时自动转人工，客服可实时接管对话，保证服务体验</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>数据统计分析</h3>
+        <p>详细记录对话数据，提供多维度报表分析，辅助优化服务策略</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔧</div>
+        <h3>快速部署上线</h3>
+        <p>提供标准API接口，最快1天完成对接，支持私有化部署</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 应用场景 -->
+  <div class="section" style="background: var(--background);">
+    <div class="section-title">
+      <h2>应用场景</h2>
+      <p>适配各类行业客户服务需求</p>
+    </div>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>🏢 企业售前咨询</h4>
+        <p>解答产品功能、价格、方案等咨询问题，自动筛选高意向客户并推送给销售团队，提升获客效率</p>
+      </div>
+      <div class="scenario-card">
+        <h4>🛒 电商售后服务</h4>
+        <p>处理订单查询、物流跟踪、退换货等常见问题，7×24小时即时响应，提升客户满意度</p>
+      </div>
+      <div class="scenario-card">
+        <h4>💼 业务办理指引</h4>
+        <p>为用户提供业务办理流程指导、操作说明，减少人工客服工作量，提升服务效率</p>
+      </div>
+      <div class="scenario-card">
+        <h4>🏥 医疗健康咨询</h4>
+        <p>提供健康知识科普、挂号指引、科室咨询等服务，缓解医院客服压力</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 客户案例 -->
+  <div class="section" style="background: var(--surface);">
+    <div class="section-title">
+      <h2>成功案例</h2>
+      <p>已服务超过200家企业客户</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏭</span>
+        </div>
+        <div class="case-body">
+          <h4>某制造业龙头</h4>
+          <p>为全国500家经销商提供7×24小时技术支持咨询</p>
+          <div class="case-stat">
+            <span><strong>95%</strong><small>问题解决率</small></span>
+            <span><strong>80%</strong><small>人力节省</small></span>
+            <span><strong>3秒</strong><small>平均响应</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>🛍️</span>
+        </div>
+        <div class="case-body">
+          <h4>某电商平台</h4>
+          <p>双十一期间承接10万+咨询量，保障服务稳定</p>
+          <div class="case-stat">
+            <span><strong>99.9%</strong><small>服务可用性</small></span>
+            <span><strong>500%</strong><small>接待能力</small></span>
+            <span><strong>60%</strong><small>成本降低</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>💰</span>
+        </div>
+        <div class="case-body">
+          <h4>某金融机构</h4>
+          <p>为APP用户提供理财咨询、账户服务等智能化服务</p>
+          <div class="case-stat">
+            <span><strong>97%</strong><small>准确率</small></span>
+            <span><strong>24/7</strong><small>全天候</small></span>
+            <span><strong>40%</strong><small>效率提升</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 咨询区域 -->
+  <div class="contact-section">
+    <h2>开启智能客服新时代</h2>
+    <p>联系我们，获取免费方案咨询与产品演示</p>
+    <div class="contact-buttons">
+      <a href="tel:13599530881" class="btn btn-white">📞 电话咨询</a>
+      <a href="../index.html#contact" class="btn btn-outline" style="border-color: white; color: white;">💬 在线咨询</a>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer>
+    <p>© 2026 <a href="../index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="../legal.html">法律信息</a></p>
+  </footer>
+
+  <!-- 浮动导航按钮 -->
+  <div class="float-nav">
+    <button class="float-nav-btn" onclick="scrollToTop()" title="返回顶部">↑</button>
+    <button class="float-nav-btn" onclick="scrollToEnd()" title="返回底部">↓</button>
+  </div>
+
+  <script>
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function scrollToEnd() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

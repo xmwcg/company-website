@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业官网定制 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="高端品牌网站设计与开发，响应式布局完美适配全设备，SEO优化提升搜索排名">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .page-header {
+      padding: 8rem 2rem 5rem;
+      background: var(--primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '🌐';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.08;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      position: relative;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--text-muted); }
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .detail-block {
+      background: var(--surface);
+      padding: 3rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+    }
+    .detail-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .detail-block p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    .process-step {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .process-step::after {
+      content: '→';
+      position: absolute;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+    .process-step:last-child::after {
+      display: none;
+    }
+    .process-num {
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto 1rem;
+    }
+    .process-step h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .process-step p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .scenarios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .scenario-card {
+      background: var(--primary);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      color: white;
+    }
+    .scenario-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .scenario-card p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .case-header {
+      background: var(--primary);
+      padding: 2rem;
+      text-align: center;
+    }
+    .case-header span {
+      font-size: 3rem;
+    }
+    .case-body {
+      padding: 1.5rem;
+    }
+    .case-body h4 {
+      margin-bottom: 0.8rem;
+    }
+    .case-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .contact-section {
+      background: var(--primary);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .contact-section p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+    }
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: white;
+      color: var(--primary);
+    }
+    .btn-white:hover {
+      background: var(--accent);
+    }
+    footer {
+      background: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-step::after { display: none; }
+      .scenarios-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+    }
+    .float-nav {
+      position: fixed;
+      right: 20px;
+      bottom: 100px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .float-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-md);
+    }
+    .float-nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../products.html" class="active">产品服务</a></li>
+        <li><a href="../about.html">关于我们</a></li>
+        <li><a href="../legal.html">法律信息</a></li>
+        <li><a href="../platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>企业官网定制</h1>
+    <p>高端品牌网站设计与开发，打造专业企业形象</p>
+  </div>
+
+  <div class="breadcrumb">
+    <div class="breadcrumb-container">
+      <a href="../index.html">首页</a>
+      <span>/</span>
+      <a href="../products.html">产品服务</a>
+      <span>/</span>
+      <span>企业官网定制</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-block">
+      <h3>服务简介</h3>
+      <p>企业官网是企业对外展示形象的第一窗口，是品牌数字化的重要载体。我们提供高端企业官网定制服务，从需求分析、视觉设计、前端开发到后端搭建，提供一站式解决方案。</p>
+      <p>无论是初创企业展示官网、中大型企业品牌官网，还是功能性平台网站，我们都能根据您的需求和预算，提供最优方案。网站采用响应式设计，完美适配电脑、手机、平板等各种设备，同时注重SEO优化，帮助您获得更好的搜索引擎排名。</p>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface); padding-top: 0;">
+    <div class="section-title">
+      <h2>核心服务</h2>
+      <p>全方位打造高品质企业网站</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>个性化UI设计</h3>
+        <p>根据企业品牌调性，量身定制独特的视觉风格，塑造专业品牌形象</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>响应式设计</h3>
+        <p>完美适配PC、手机、平板等全终端设备，提供一致的浏览体验</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>SEO基础优化</h3>
+        <p>符合搜索引擎抓取规则，提升关键词排名，获取更多自然流量</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>快速加载速度</h3>
+        <p>优化代码结构，提升网站加载速度，降低用户跳出率</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>安全防护保障</h3>
+        <p>HTTPS加密、防注入、防篡改，保护网站和用户数据安全</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3>后台内容管理</h3>
+        <p>可视化后台管理，内容更新无需编程，自主运营更便捷</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--background);">
+    <div class="section-title">
+      <h2>服务流程</h2>
+      <p>标准化开发流程，确保项目高质量交付</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <h4>需求沟通</h4>
+        <p>深入了解企业需求与目标</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <h4>方案设计</h4>
+        <p>制定网站架构与视觉方案</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <h4>开发实施</h4>
+        <p>前后端开发与功能实现</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">4</div>
+        <h4>测试上线</h4>
+        <p>全面测试与正式部署上线</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">5</div>
+        <h4>运维支持</h4>
+        <p>持续维护与功能迭代</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface);">
+    <div class="section-title">
+      <h2>适用场景</h2>
+      <p>满足各类企业网站需求</p>
+    </div>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>🏢 企业展示官网</h4>
+        <p>公司介绍、产品服务、新闻动态、联系方式等标准模块，塑造专业企业形象</p>
+      </div>
+      <div class="scenario-card">
+        <h4>🛒 品牌电商网站</h4>
+        <p>产品展示、在线下单、会员系统、支付对接等电商功能，拓展线上销售渠道</p>
+      </div>
+      <div class="scenario-card">
+        <h4>💼 企业服务平台</h4>
+        <p>在线预约、会员管理、数据统计等个性化功能，提升服务效率与用户体验</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h2>打造您的专属企业官网</h2>
+    <p>联系我们，获取免费方案咨询与报价</p>
+    <div class="contact-buttons">
+      <a href="tel:13599530881" class="btn btn-white">📞 电话咨询</a>
+      <a href="../index.html#contact" class="btn btn-outline" style="border-color: white; color: white;">💬 在线咨询</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="../index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="../legal.html">法律信息</a></p>
+  </footer>
+
+  <div class="float-nav">
+    <button class="float-nav-btn" onclick="scrollToTop()" title="返回顶部">↑</button>
+    <button class="float-nav-btn" onclick="scrollToEnd()" title="返回底部">↓</button>
+  </div>
+
+  <script>
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>业务流程自动化 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="RPA机器人流程自动化解决方案，替代重复性人工操作，效率提升300%+">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .page-header {
+      padding: 8rem 2rem 5rem;
+      background: var(--primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '🔄';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.08;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      position: relative;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--text-muted); }
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .detail-block {
+      background: var(--surface);
+      padding: 3rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+    }
+    .detail-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .detail-block p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    .scenarios-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .scenario-card {
+      background: var(--primary);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      color: white;
+    }
+    .scenario-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .scenario-card p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .case-header {
+      background: var(--primary);
+      padding: 2rem;
+      text-align: center;
+    }
+    .case-header span {
+      font-size: 3rem;
+    }
+    .case-body {
+      padding: 1.5rem;
+    }
+    .case-body h4 {
+      margin-bottom: 0.8rem;
+    }
+    .case-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .case-stat {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .case-stat span {
+      text-align: center;
+    }
+    .case-stat strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+    .case-stat small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .contact-section {
+      background: var(--primary);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .contact-section p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+    }
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: white;
+      color: var(--primary);
+    }
+    .btn-white:hover {
+      background: var(--accent);
+    }
+    footer {
+      background: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .scenarios-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+    }
+    .float-nav {
+      position: fixed;
+      right: 20px;
+      bottom: 100px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .float-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-md);
+    }
+    .float-nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../products.html" class="active">产品服务</a></li>
+        <li><a href="../about.html">关于我们</a></li>
+        <li><a href="../legal.html">法律信息</a></li>
+        <li><a href="../platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>业务流程自动化</h1>
+    <p>RPA机器人流程自动化，让重复工作自动化，效率提升300%+</p>
+  </div>
+
+  <div class="breadcrumb">
+    <div class="breadcrumb-container">
+      <a href="../index.html">首页</a>
+      <span>/</span>
+      <a href="../products.html">产品服务</a>
+      <span>/</span>
+      <span>业务流程自动化</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-block">
+      <h3>产品简介</h3>
+      <p>业务流程自动化（Robotic Process Automation，RPA）是一种通过软件机器人模拟人工操作的自动化技术。它能够7×24小时不间断地执行重复性、规则性的电脑操作，如数据录入、表单填写、报表生成、邮件处理等，让员工从繁琐的事务中解放出来，专注更有价值的工作。</p>
+      <p>我们的RPA解决方案支持网页、桌面应用、Excel、邮件系统等多种场景的自动化，能够跨系统、跨应用完成复杂业务流程，大幅提升工作效率，降低人为错误。</p>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface); padding-top: 0;">
+    <div class="section-title">
+      <h2>核心优势</h2>
+      <p>为什么选择我们的RPA解决方案</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>零侵入部署</h3>
+        <p>无需改造现有系统，直接模拟人工操作，快速上线</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⏰</div>
+        <h3>7×24小时运行</h3>
+        <p>全天候无人值守运行，节假日不休息，工作效率翻倍</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>操作日志追溯</h3>
+        <p>全程记录操作日志，支持审计回溯，确保合规</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>跨系统打通</h3>
+        <p>自动操作多个系统，解决数据孤岛问题</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>效率提升300%+</h3>
+        <p>同样的工作量，RPA机器人只需1/3的时间</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>零错误率</h3>
+        <p>严格按照规则执行，彻底杜绝人为操作失误</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--background);">
+    <div class="section-title">
+      <h2>适用场景</h2>
+      <p>覆盖企业各类重复性工作场景</p>
+    </div>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>📝 财务对账</h4>
+        <p>自动完成银行流水下载、财务核对、凭证生成等工作，大幅减轻财务人员工作量</p>
+      </div>
+      <div class="scenario-card">
+        <h4>📦 订单处理</h4>
+        <p>自动抓取订单信息、同步库存、生成发货单，实现订单处理全流程自动化</p>
+      </div>
+      <div class="scenario-card">
+        <h4>📧 邮件处理</h4>
+        <p>自动分类邮件、提取关键信息、生成回复草稿，提升客户服务响应速度</p>
+      </div>
+      <div class="scenario-card">
+        <h4>📄 报表生成</h4>
+        <p>自动从各系统提取数据，生成日报、周报、月报等，提升数据汇报效率</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface);">
+    <div class="section-title">
+      <h2>客户案例</h2>
+      <p>已帮助50+企业实现流程自动化</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏦</span>
+        </div>
+        <div class="case-body">
+          <h4>某商业银行</h4>
+          <p>信用卡审批流程自动化改造</p>
+          <div class="case-stat">
+            <span><strong>85%</strong><small>效率提升</small></span>
+            <span><strong>3人</strong><small>释放人力</small></span>
+            <span><strong>0</strong><small>错误率</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏢</span>
+        </div>
+        <div class="case-body">
+          <h4>某物业公司</h4>
+          <p>财务对账与报表生成自动化</p>
+          <div class="case-stat">
+            <span><strong>300%</strong><small>效率提升</small></span>
+            <span><strong>200h</strong><small>月度节省</small></span>
+            <span><strong>100%</strong><small>数据准确</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏭</span>
+        </div>
+        <div class="case-body">
+          <h4>某制造企业</h4>
+          <p>订单处理与库存同步自动化</p>
+          <div class="case-stat">
+            <span><strong>24/7</strong><small>自动运行</small></span>
+            <span><strong>5秒</strong><small>处理时间</small></span>
+            <span><strong>99%</strong><small>准确率</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h2>让机器人替你完成重复工作</h2>
+    <p>联系我们，了解RPA如何为您的企业降本增效</p>
+    <div class="contact-buttons">
+      <a href="tel:13599530881" class="btn btn-white">📞 电话咨询</a>
+      <a href="../index.html#contact" class="btn btn-outline" style="border-color: white; color: white;">💬 在线咨询</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="../index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="../legal.html">法律信息</a></p>
+  </footer>
+
+  <div class="float-nav">
+    <button class="float-nav-btn" onclick="scrollToTop()" title="返回顶部">↑</button>
+    <button class="float-nav-btn" onclick="scrollToEnd()" title="返回底部">↓</button>
+  </div>
+
+  <script>
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据可视化平台 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="企业级数据大屏与BI分析平台，实时展示业务数据，支持多维度钻取分析，辅助管理层科学决策">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .page-header {
+      padding: 8rem 2rem 5rem;
+      background: var(--primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '📊';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.08;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      position: relative;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--text-muted); }
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .detail-block {
+      background: var(--surface);
+      padding: 3rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+    }
+    .detail-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .detail-block p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    .detail-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .detail-list li {
+      padding: 1rem;
+      background: var(--background);
+      border-radius: var(--radius);
+      padding-left: 2.5rem;
+      position: relative;
+    }
+    .detail-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 1rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .scenarios-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .scenario-card {
+      background: var(--primary);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      color: white;
+    }
+    .scenario-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .scenario-card p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .pricing-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      border-radius: var(--radius-md);
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .pricing-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+    .pricing-card.featured {
+      border: 2px solid var(--accent);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: '推荐方案';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .pricing-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .pricing-price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .pricing-price span {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+    .pricing-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+    .pricing-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .case-header {
+      background: var(--primary);
+      padding: 2rem;
+      text-align: center;
+    }
+    .case-header span {
+      font-size: 3rem;
+    }
+    .case-body {
+      padding: 1.5rem;
+    }
+    .case-body h4 {
+      margin-bottom: 0.8rem;
+    }
+    .case-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .case-stat {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .case-stat span {
+      text-align: center;
+    }
+    .case-stat strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+    .case-stat small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .contact-section {
+      background: var(--primary);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .contact-section p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+    }
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: white;
+      color: var(--primary);
+    }
+    .btn-white:hover {
+      background: var(--accent);
+    }
+    footer {
+      background: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .detail-list { grid-template-columns: 1fr; }
+      .scenarios-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+    }
+    .float-nav {
+      position: fixed;
+      right: 20px;
+      bottom: 100px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .float-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-md);
+    }
+    .float-nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../products.html" class="active">产品服务</a></li>
+        <li><a href="../about.html">关于我们</a></li>
+        <li><a href="../legal.html">法律信息</a></li>
+        <li><a href="../platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>数据可视化平台</h1>
+    <p>企业级BI大屏与数据分析平台，让数据驱动决策</p>
+  </div>
+
+  <div class="breadcrumb">
+    <div class="breadcrumb-container">
+      <a href="../index.html">首页</a>
+      <span>/</span>
+      <a href="../products.html">产品服务</a>
+      <span>/</span>
+      <span>数据可视化平台</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-block">
+      <h3>产品简介</h3>
+      <p>数据可视化平台是一款面向企业的数据展示与分析工具，能够将分散的业务数据整合成直观、美观的可视化大屏和报表。平台提供50+种图表类型，支持实时数据刷新，帮助企业管理者快速掌握业务全貌，洞察经营趋势，科学制定决策。</p>
+      <p>无论是指挥中心的大屏展示、管理层的经营看板，还是业务部门的日常报表，数据可视化平台都能提供专业、高效的解决方案。支持私有化部署，数据不出企业，确保信息安全。</p>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface); padding-top: 0;">
+    <div class="section-title">
+      <h2>核心功能</h2>
+      <p>强大的数据可视化能力，满足各类展示需求</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>拖拽式编辑器</h3>
+        <p>无需编程，通过拖拽即可创建精美大屏，支持多种布局模板</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>50+图表类型</h3>
+        <p>折线图、柱状图、饼图、地图、热力图等丰富图表，支持自定义样式</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>实时数据刷新</h3>
+        <p>支持多种数据源接入，实现数据秒级更新，满足监控场景需求</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <h3>多端适配</h3>
+        <p>完美适配PC端、大屏拼接墙、移动端等多种展示设备</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>私有化部署</h3>
+        <p>支持本地部署，数据不出企业，满足金融、医疗等高安全要求</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <h3>丰富数据源</h3>
+        <p>支持MySQL、API、Excel等多种数据源接入，快速对接现有系统</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--background);">
+    <div class="section-title">
+      <h2>应用场景</h2>
+      <p>覆盖各行业数据展示需求</p>
+    </div>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>🏢 智慧运营中心</h4>
+        <p>实时展示企业核心业务指标，如订单量、销售额、库存状态等，为管理层决策提供数据支撑</p>
+      </div>
+      <div class="scenario-card">
+        <h4>🚚 物流监控大屏</h4>
+        <p>展示车辆位置、配送进度、在途状态等物流数据，实现全链路可视化监控</p>
+      </div>
+      <div class="scenario-card">
+        <h4>🏥 医疗数据中心</h4>
+        <p>整合患者数据、床位信息、手术安排等，提升医院运营效率和医疗服务质量</p>
+      </div>
+      <div class="scenario-card">
+        <h4>🎓 智慧校园大屏</h4>
+        <p>展示校园安防、能耗管理、教学数据等，助力教育信息化升级</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface);">
+    <div class="section-title">
+      <h2>成功案例</h2>
+      <p>已为30+企业提供数据可视化解决方案</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏭</span>
+        </div>
+        <div class="case-body">
+          <h4>某大型制造企业</h4>
+          <p>搭建智慧工厂指挥中心，实时监控生产数据</p>
+          <div class="case-stat">
+            <span><strong>200+</strong><small>数据指标</small></span>
+            <span><strong>5秒</strong><small>刷新间隔</small></span>
+            <span><strong>98%</strong><small>准确率</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>🚚</span>
+        </div>
+        <div class="case-body">
+          <h4>某快递公司</h4>
+          <p>物流监控大屏，实时展示全国配送状态</p>
+          <div class="case-stat">
+            <span><strong>5000+</strong><small>车辆追踪</small></span>
+            <span><strong>实时</strong><small>位置更新</small></span>
+            <span><strong>99.9%</strong><small>系统稳定</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏥</span>
+        </div>
+        <div class="case-body">
+          <h4>某三甲医院</h4>
+          <p>智慧医疗数据平台，提升医院运营效率</p>
+          <div class="case-stat">
+            <span><strong>50+</strong><small>数据维度</small></span>
+            <span><strong>30%</strong><small>效率提升</small></span>
+            <span><strong>私有化</strong><small>部署方案</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h2>让数据说话，用可视化驱动增长</h2>
+    <p>联系我们，获取免费方案咨询与产品演示</p>
+    <div class="contact-buttons">
+      <a href="tel:13599530881" class="btn btn-white">📞 电话咨询</a>
+      <a href="../index.html#contact" class="btn btn-outline" style="border-color: white; color: white;">💬 在线咨询</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="../index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="../legal.html">法律信息</a></p>
+  </footer>
+
+  <div class="float-nav">
+    <button class="float-nav-btn" onclick="scrollToTop()" title="返回顶部">↑</button>
+    <button class="float-nav-btn" onclick="scrollToEnd()" title="返回底部">↓</button>
+  </div>
+
+  <script>
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+  </script>
+</body>
+</html>

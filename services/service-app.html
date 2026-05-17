@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>移动应用开发 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="iOS、Android双平台原生开发，以及跨平台框架一站式部署，快速触达目标用户">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .page-header {
+      padding: 8rem 2rem 5rem;
+      background: var(--primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '📱';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.08;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      position: relative;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--text-muted); }
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .detail-block {
+      background: var(--surface);
+      padding: 3rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+    }
+    .detail-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .detail-block p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .tech-card {
+      background: var(--background);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .tech-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .tech-card ul {
+      list-style: none;
+    }
+    .tech-card li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+    }
+    .tech-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .scenarios-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .scenario-card {
+      background: var(--primary);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      color: white;
+    }
+    .scenario-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .scenario-card p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .case-header {
+      background: var(--primary);
+      padding: 2rem;
+      text-align: center;
+    }
+    .case-header span {
+      font-size: 3rem;
+    }
+    .case-body {
+      padding: 1.5rem;
+    }
+    .case-body h4 {
+      margin-bottom: 0.8rem;
+    }
+    .case-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .case-stat {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .case-stat span {
+      text-align: center;
+    }
+    .case-stat strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+    .case-stat small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .contact-section {
+      background: var(--primary);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .contact-section p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+    }
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: white;
+      color: var(--primary);
+    }
+    .btn-white:hover {
+      background: var(--accent);
+    }
+    footer {
+      background: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .scenarios-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+    }
+    .float-nav {
+      position: fixed;
+      right: 20px;
+      bottom: 100px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .float-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-md);
+    }
+    .float-nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../products.html" class="active">产品服务</a></li>
+        <li><a href="../about.html">关于我们</a></li>
+        <li><a href="../legal.html">法律信息</a></li>
+        <li><a href="../platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>移动应用开发</h1>
+    <p>iOS · Android双平台原生开发，一站式部署</p>
+  </div>
+
+  <div class="breadcrumb">
+    <div class="breadcrumb-container">
+      <a href="../index.html">首页</a>
+      <span>/</span>
+      <a href="../products.html">产品服务</a>
+      <span>/</span>
+      <span>移动应用开发</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-block">
+      <h3>服务简介</h3>
+      <p>我们提供专业的移动应用开发服务，涵盖iOS、Android双平台原生开发，以及Flutter、React Native等跨平台框架开发。无论您需要原生性能体验还是一次开发多端部署，我们都能提供最优解决方案。</p>
+      <p>团队拥有10+年移动开发经验，已成功交付100+款移动应用，覆盖电商、社交、企业服务、工具类等多个领域。我们不仅提供开发服务，还提供UI/UX设计、前后端API开发、应用市场上架、长期维护等一站式服务。</p>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface); padding-top: 0;">
+    <div class="section-title">
+      <h2>开发方案</h2>
+      <p>多种技术方案，匹配不同需求</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h4>iOS原生开发</h4>
+        <ul>
+          <li>Swift / Objective-C 开发</li>
+          <li>完美原生性能体验</li>
+          <li>充分利用iOS系统能力</li>
+          <li>App Store上架服务</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>Android原生开发</h4>
+        <ul>
+          <li>Kotlin / Java 开发</li>
+          <li>Material Design规范</li>
+          <li>适配主流Android设备</li>
+          <li>应用市场上架服务</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>Flutter跨平台开发</h4>
+        <ul>
+          <li>一次开发，iOS+Android双端</li>
+          <li>接近原生的性能表现</li>
+          <li>丰富的UI组件库</li>
+          <li>开发周期短，成本效益高</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>React Native开发</h4>
+        <ul>
+          <li>JavaScript/TypeScript技术栈</li>
+          <li>热更新能力，无需审核</li>
+          <li>可复用Web端代码</li>
+          <li>适合快速迭代产品</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--background);">
+    <div class="section-title">
+      <h2>服务内容</h2>
+      <p>从设计到上架，全流程服务</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>UI/UX设计</h3>
+        <p>专业设计师提供高保真原型和视觉设计，打造优秀用户体验</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>前后端开发</h3>
+        <p>移动端+服务端API一站式开发，确保系统整体性能</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>测试上线</h3>
+        <p>全面测试保障质量，应用市场上架全程协助</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>安全加固</h3>
+        <p>代码混淆、数据加密、安全检测，保护应用安全</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>运营支持</h3>
+        <p>数据分析、版本迭代、功能优化，持续提升产品价值</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>长期维护</h3>
+        <p>Bug修复、系统更新、安全补丁，保障应用稳定运行</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--surface);">
+    <div class="section-title">
+      <h2>成功案例</h2>
+      <p>已交付100+款优质移动应用</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-header">
+          <span>🛒</span>
+        </div>
+        <div class="case-body">
+          <h4>某电商APP</h4>
+          <p>iOS+Android双平台电商应用</p>
+          <div class="case-stat">
+            <span><strong>50万+</strong><small>下载量</small></span>
+            <span><strong>4.8</strong><small>评分</small></span>
+            <span><strong>Flutter</strong><small>技术</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>💼</span>
+        </div>
+        <div class="case-body">
+          <h4>某企业管理APP</h4>
+          <p>企业内部办公与协作平台</p>
+          <div class="case-stat">
+            <span><strong>1万+</strong><small>企业用户</small></span>
+            <span><strong>原生</strong><small>iOS/Android</small></span>
+            <span><strong>私有化</strong><small>部署</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <span>🏋️</span>
+        </div>
+        <div class="case-body">
+          <h4>某健身APP</h4>
+          <p>在线健身课程与社区应用</p>
+          <div class="case-stat">
+            <span><strong>100万+</strong><small>注册用户</small></span>
+            <span><strong>React Native</strong><small>技术</small></span>
+            <span><strong>热更新</strong><small>支持</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h2>开启您的移动应用开发之旅</h2>
+    <p>联系我们，获取专业咨询与项目评估</p>
+    <div class="contact-buttons">
+      <a href="tel:13599530881" class="btn btn-white">📞 电话咨询</a>
+      <a href="../index.html#contact" class="btn btn-outline" style="border-color: white; color: white;">💬 在线咨询</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="../index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="../legal.html">法律信息</a></p>
+  </footer>
+
+  <div class="float-nav">
+    <button class="float-nav-btn" onclick="scrollToTop()" title="返回顶部">↑</button>
+    <button class="float-nav-btn" onclick="scrollToEnd()" title="返回底部">↓</button>
+  </div>
+
+  <script>
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function scrollToEnd() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+  </script>
+</body>
+</html>
