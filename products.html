@@ -196,6 +196,22 @@
       text-decoration: none;
     }
     footer a:hover { color: var(--accent); }
+    /* 产品卡片链接样式 - 整个卡片可点击 */
+    .product-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card-link:hover {
+      transform: translateY(-4px);
+    }
+    .product-card-link:hover .product-card {
+      box-shadow: var(--shadow-md), 0 0 0 2px var(--accent);
+    }
+    .product-card-link:hover .btn-accent {
+      background: var(--accent-dark);
+    }
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .product-card { grid-template-columns: 1fr; gap: 2rem; }
@@ -242,108 +258,126 @@
     <p>全方位数字化解决方案，助力企业智能升级</p>
   </div>
 
-  <div class="section">
-    <div class="product-card">
-      <div class="product-content">
-        <div class="product-icon">💬</div>
-        <h2>智能客服系统</h2>
-        <p>基于大语言模型的智能客服解决方案，7×24小时即时响应客户咨询，精准理解用户意图，大幅降低人力成本，提升客户满意度。</p>
-        <ul class="product-features">
-          <li>多渠道接入（网站、APP、微信、企微）</li>
-          <li>智能语义理解，准确率达95%+</li>
-          <li>知识库自主学习，持续优化</li>
-          <li>人工坐席无缝接管</li>
-          <li>详细数据报表与分析</li>
-        </ul>
-        <a href="services/service-chatbot.html" class="btn btn-accent">了解更多</a>
+    <div class="section">
+    <!-- 产品1: 智能客服系统 -->
+    <a href="services/service-chatbot.html" class="product-card-link">
+      <div class="product-card">
+        <div class="product-content">
+          <div class="product-icon">💬</div>
+          <h2>智能客服系统</h2>
+          <p>基于大语言模型的智能客服解决方案，7×24小时即时响应客户咨询，精准理解用户意图，大幅降低人力成本，提升客户满意度。</p>
+          <ul class="product-features">
+            <li>多渠道接入（网站、APP、微信、企微）</li>
+            <li>智能语义理解，准确率达95%+</li>
+            <li>知识库自主学习，持续优化</li>
+            <li>人工坐席无缝接管</li>
+            <li>详细数据报表与分析</li>
+          </ul>
+          <span class="btn btn-accent">了解更多 →</span>
+        </div>
+        <div class="product-visual">💬</div>
       </div>
-      <div class="product-visual">💬</div>
-    </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-content">
-        <div class="product-icon">📊</div>
-        <h2>数据可视化平台</h2>
-        <p>企业级数据大屏与BI分析平台，实时展示业务数据，支持多维度钻取分析，辅助管理层科学决策。</p>
-        <ul class="product-features">
-          <li>拖拽式可视化编辑器</li>
-          <li>50+图表类型可选</li>
-          <li>实时数据刷新</li>
-          <li>多端适配（PC/大屏/移动）</li>
-          <li>私有化部署，数据安全</li>
-        </ul>
-        <a href="services/service-dataviz.html" class="btn btn-accent">了解更多</a>
+    <!-- 产品2: 数据可视化平台 -->
+    <a href="services/service-dataviz.html" class="product-card-link">
+      <div class="product-card">
+        <div class="product-content">
+          <div class="product-icon">📊</div>
+          <h2>数据可视化平台</h2>
+          <p>企业级数据大屏与BI分析平台，实时展示业务数据，支持多维度钻取分析，辅助管理层科学决策。</p>
+          <ul class="product-features">
+            <li>拖拽式可视化编辑器</li>
+            <li>50+图表类型可选</li>
+            <li>实时数据刷新</li>
+            <li>多端适配（PC/大屏/移动）</li>
+            <li>私有化部署，数据安全</li>
+          </ul>
+          <span class="btn btn-accent">了解更多 →</span>
+        </div>
+        <div class="product-visual">📊</div>
       </div>
-      <div class="product-visual">📊</div>
-    </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-content">
-        <div class="product-icon">🔄</div>
-        <h2>业务流程自动化</h2>
-        <p>RPA机器人流程自动化解决方案，替代重复性人工操作，让员工专注高价值创造性工作，效率提升300%+。</p>
-        <ul class="product-features">
-          <li>可视化流程设计器</li>
-          <li>支持网页、桌面、Excel自动化</li>
-          <li>7×24小时无人值守运行</li>
-          <li>操作日志全程追溯</li>
-          <li>跨系统数据打通</li>
-        </ul>
-        <a href="services/service-rpa.html" class="btn btn-accent">了解更多</a>
+    <!-- 产品3: 业务流程自动化 -->
+    <a href="services/service-rpa.html" class="product-card-link">
+      <div class="product-card">
+        <div class="product-content">
+          <div class="product-icon">🔄</div>
+          <h2>业务流程自动化</h2>
+          <p>RPA机器人流程自动化解决方案，替代重复性人工操作，让员工专注高价值创造性工作，效率提升300%+。</p>
+          <ul class="product-features">
+            <li>可视化流程设计器</li>
+            <li>支持网页、桌面、Excel自动化</li>
+            <li>7×24小时无人值守运行</li>
+            <li>操作日志全程追溯</li>
+            <li>跨系统数据打通</li>
+          </ul>
+          <span class="btn btn-accent">了解更多 →</span>
+        </div>
+        <div class="product-visual">🔄</div>
       </div>
-      <div class="product-visual">🔄</div>
-    </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-content">
-        <div class="product-icon">📱</div>
-        <h2>移动应用开发</h2>
-        <p>iOS、Android双平台原生开发，以及跨平台框架（Flutter/React Native）一站式部署，快速触达目标用户。</p>
-        <ul class="product-features">
-          <li>原生性能体验</li>
-          <li>UI/UX专业设计</li>
-          <li>前后端API开发</li>
-          <li>应用市场上架服务</li>
-          <li>长期维护与迭代</li>
-        </ul>
-        <a href="services/service-app.html" class="btn btn-accent">了解更多</a>
+    <!-- 产品4: 移动应用开发 -->
+    <a href="services/service-app.html" class="product-card-link">
+      <div class="product-card">
+        <div class="product-content">
+          <div class="product-icon">📱</div>
+          <h2>移动应用开发</h2>
+          <p>iOS、Android双平台原生开发，以及跨平台框架（Flutter/React Native）一站式部署，快速触达目标用户。</p>
+          <ul class="product-features">
+            <li>原生性能体验</li>
+            <li>UI/UX专业设计</li>
+            <li>前后端API开发</li>
+            <li>应用市场上架服务</li>
+            <li>长期维护与迭代</li>
+          </ul>
+          <span class="btn btn-accent">了解更多 →</span>
+        </div>
+        <div class="product-visual">📱</div>
       </div>
-      <div class="product-visual">📱</div>
-    </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-content">
-        <div class="product-icon">🌐</div>
-        <h2>企业官网定制</h2>
-        <p>高端品牌网站设计与开发，响应式布局完美适配全设备，SEO优化提升搜索排名，打造专业企业形象。</p>
-        <ul class="product-features">
-          <li>个性化UI设计</li>
-          <li>响应式多端适配</li>
-          <li>SEO基础优化</li>
-          <li>安全防护保障</li>
-          <li>后台内容管理</li>
-        </ul>
-        <a href="services/service-website.html" class="btn btn-accent">了解更多</a>
+    <!-- 产品5: 企业官网定制 -->
+    <a href="services/service-website.html" class="product-card-link">
+      <div class="product-card">
+        <div class="product-content">
+          <div class="product-icon">🌐</div>
+          <h2>企业官网定制</h2>
+          <p>高端品牌网站设计与开发，响应式布局完美适配全设备，SEO优化提升搜索排名，打造专业企业形象。</p>
+          <ul class="product-features">
+            <li>个性化UI设计</li>
+            <li>响应式多端适配</li>
+            <li>SEO基础优化</li>
+            <li>安全防护保障</li>
+            <li>后台内容管理</li>
+          </ul>
+          <span class="btn btn-accent">了解更多 →</span>
+        </div>
+        <div class="product-visual">🌐</div>
       </div>
-      <div class="product-visual">🌐</div>
-    </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-content">
-        <div class="product-icon">☁️</div>
-        <h2>云服务部署</h2>
-        <p>阿里云、腾讯云架构设计与迁移服务，弹性扩容方案设计，确保系统稳定、安全、高可用。</p>
-        <ul class="product-features">
-          <li>云架构方案设计</li>
-          <li>数据安全迁移</li>
-          <li>性能监控与优化</li>
-          <li>容灾备份方案</li>
-          <li>7×24技术支持</li>
-        </ul>
-        <a href="services/service-cloud.html" class="btn btn-accent">了解更多</a>
+    <!-- 产品6: 云服务部署 -->
+    <a href="services/service-cloud.html" class="product-card-link">
+      <div class="product-card">
+        <div class="product-content">
+          <div class="product-icon">☁️</div>
+          <h2>云服务部署</h2>
+          <p>阿里云、腾讯云架构设计与迁移服务，弹性扩容方案设计，确保系统稳定、安全、高可用。</p>
+          <ul class="product-features">
+            <li>云架构方案设计</li>
+            <li>数据安全迁移</li>
+            <li>性能监控与优化</li>
+            <li>容灾备份方案</li>
+            <li>7×24技术支持</li>
+          </ul>
+          <span class="btn btn-accent">了解更多 →</span>
+        </div>
+        <div class="product-visual">☁️</div>
       </div>
-      <div class="product-visual">☁️</div>
-    </div>
+    </a>
   </div>
 
   <div class="cta-section">
