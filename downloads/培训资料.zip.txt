@@ -1,0 +1,9 @@
+#!/bin/bash
+# 培训资料 - 部署脚本示例
+
+echo "开始部署..."
+npm install
+npm run build
+npm run start
+
+echo "部署完成！"

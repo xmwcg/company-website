@@ -895,7 +895,25 @@
       });
     });
 
-    // 删除功能
+    // 文件下载功能
+    document.querySelectorAll('.action-btn[title="下载"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const item = this.closest('.file-item');
+        const name = item.querySelector('.file-name').textContent;
+        alert('开始下载：' + name + '\n\n（这是静态演示版本\n实际项目中会下载真实文件）');
+        
+        // 模拟下载（静态演示）
+        const blob = new Blob(['这是 ' + name + ' 的示例内容\n\n金奕鸣科技有限公司\n用技术创造价值'], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    });
     document.querySelectorAll('.action-btn[title="删除"]').forEach(btn => {
       btn.addEventListener('click', function() {
         const item = this.closest('.file-item');

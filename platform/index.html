@@ -515,9 +515,9 @@
             <span>▼</span>
           </div>
           <div class="dropdown-menu" id="dropdownMenu">
-            <a href="#" class="dropdown-item">👤 个人资料</a>
-            <a href="#" class="dropdown-item">⚙️ 账户设置</a>
-            <a href="#" class="dropdown-item">💳 充值中心</a>
+            <a href="profile.html" class="dropdown-item">👤 个人资料</a>
+            <a href="settings.html" class="dropdown-item">⚙️ 账户设置</a>
+            <a href="recharge.html" class="dropdown-item">💳 充值中心</a>
             <div class="dropdown-divider"></div>
             <a href="login.html" class="dropdown-item danger">🚪 退出登录</a>
           </div>
@@ -708,6 +708,25 @@
       if (folderName) {
         alert('文件夹 "' + folderName + '" 创建成功！');
       }
+    });
+
+    // 首页最近文件的下载功能
+    document.querySelectorAll('.file-item .btn-icon[title="下载"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const name = this.closest('.file-item').querySelector('.file-name').textContent;
+        alert('开始下载：' + name + '\n\n（这是静态演示版本\n实际项目中会下载真实文件）');
+        
+        // 模拟下载
+        const blob = new Blob(['这是 ' + name + ' 的示例内容\n\n金奕鸣科技有限公司\n用技术创造价值'], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
     });
   </script>
 </body>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账户设置 - 金奕鸣科技</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A1A1A;
+      --accent: #C9A84C;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+
+    * { margin:0; padding:0; box-sizing: border-box; }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, #A68A3A 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .main {
+      padding-top: 64px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .settings-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .settings-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .setting-item:last-child { border-bottom: none; }
+
+    .setting-info h4 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .setting-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      background: var(--border);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle.active { background: var(--accent); }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    .toggle.active::after { transform: translateX(22px); }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--font-body);
+    }
+
+    .btn-danger {
+      background: #FEE2E2;
+      border: 1px solid #FCA5A5;
+      color: #DC2626;
+    }
+
+    .btn-danger:hover { background: #FCA5A5; }
+
+    @media (max-width: 768px) {
+      .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      
+      <div class="header-right">
+        <div class="user-info">
+          <div class="user-avatar">李</div>
+          <span>李先生</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <h1 class="page-title">⚙️ 账户设置</h1>
+
+    <!-- 通知设置 -->
+    <div class="settings-card">
+      <h3 class="settings-title">通知设置</h3>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>邮件通知</h4>
+          <p>接收项目更新、系统通知等邮件</p>
+        </div>
+        <div class="toggle active" onclick="this.classList.toggle('active'); alert('邮件通知已开启')"></div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>短信通知</h4>
+          <p>接收重要事项的短信提醒</p>
+        </div>
+        <div class="toggle" onclick="this.classList.toggle('active'); alert('短信通知已关闭')"></div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>微信通知</h4>
+          <p>通过微信公众号接收通知</p>
+        </div>
+        <div class="toggle active" onclick="this.classList.toggle('active'); alert('微信通知已开启')"></div>
+      </div>
+    </div>
+
+    <!-- 安全设置 -->
+    <div class="settings-card">
+      <h3 class="settings-title">安全设置</h3>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>修改密码</h4>
+          <p>定期修改密码以保护账户安全</p>
+        </div>
+        <button class="btn btn-ghost" onclick="alert('修改密码功能需要后端支持\n当前为静态演示版本')">修改</button>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>两步验证</h4>
+          <p>启用后登录需要额外验证</p>
+        </div>
+        <div class="toggle" onclick="this.classList.toggle('active'); alert('两步验证功能需要后端支持')"></div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>登录设备管理</h4>
+          <p>查看和管理已登录的设备</p>
+        </div>
+        <button class="btn btn-ghost" onclick="alert('登录设备管理功能需要后端支持')">管理</button>
+      </div>
+    </div>
+
+    <!-- 危险操作 -->
+    <div class="settings-card">
+      <h3 class="settings-title" style="color: #DC2626;">危险操作</h3>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>注销账户</h4>
+          <p>永久删除账户及所有数据，不可恢复</p>
+        </div>
+        <button class="btn btn-danger" onclick="if(confirm('确定要注销账户吗？此操作不可恢复！')) { alert('注销账户功能需要后端支持') }">注销账户</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 页面加载时恢复toggle状态
+    document.addEventListener('DOMContentLoaded', function() {
+      // 这里可以从localStorage读取用户设置
+      console.log('设置页面加载完成');
+    });
+  </script>
+</body>
+</html>

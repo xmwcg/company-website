@@ -1,455 +1,1296 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>厦门金奕鸣科技有限公司 - 技术研发专家</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>厦门金奕鸣科技有限公司 - 专业AI解决方案服务商</title>
+  <meta name="description" content="厦门金奕鸣科技专注于企业数字化转型与AI应用开发，提供智能客服、数据分析、流程自动化等一站式解决方案">
+  <meta name="keywords" content="智能客服, AI开发, 数据分析, 数字化转型, 厦门, 金奕鸣">
+  <meta name="author" content="厦门金奕鸣科技有限公司">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==================== CSS Variables ==================== */
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.08);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
 
-        body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: #0a0e27;
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
+    /* ==================== Reset & Base ==================== */
+    * { margin:0; padding:0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
 
-        /* 导航栏 */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-        }
+    /* ==================== Navigation ==================== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
 
-        nav ul {
-            display: flex;
-            justify-content: flex-end;
-            list-style: none;
-            gap: 2rem;
-            flex-wrap: wrap;
-            white-space: nowrap;
-        }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        nav a {
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
 
-        nav a:hover {
-            color: #00d4ff;
-        }
+    .logo span { color: var(--accent); }
 
-        /* Hero区域 */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            position: relative;
-            overflow: hidden;
-            padding: 0 !important; /* 覆盖section的padding，避免内容被向下推移 */
-            max-width: 100% !important;
-        }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
 
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-        }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { width: 100%; }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            background: linear-gradient(45deg, #00d4ff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
 
-        .hero p {
-            font-size: 1.5rem;
-            color: #a0a0a0;
-            margin-bottom: 2rem;
-        }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      display: inline-block;
+    }
 
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 3rem;
-            background: linear-gradient(45deg, #00d4ff, #00ff88);
-            color: #0a0e27;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
-        }
+    .btn-ghost:hover {
+      border-color: var(--text-primary);
+      background: var(--text-primary);
+      color: white;
+    }
 
-        /* 内容区块 */
-        section {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .btn-primary {
+      background: var(--primary);
+      border: none;
+      color: white;
+    }
 
-        section h2 {
-            font-size: 2.5rem;
-            color: #00d4ff;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
+    .btn-primary:hover { background: var(--accent); }
 
-        /* 关于我们 */
-        #about {
-            background: #0f1429;
-        }
+    .btn-accent {
+      background: var(--accent);
+      border: none;
+      color: var(--primary);
+    }
 
-        #about p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #c0c0c0;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-        }
+    .btn-accent:hover { background: var(--accent-light); }
 
-        /* 服务项目 */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+    /* ==================== Hero Section ==================== */
+    .hero {
+      padding: 10rem 2rem 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      min-height: 80vh;
+    }
 
-        .service-card {
-            background: #1a1f3a;
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            transition: transform 0.3s, border-color 0.3s;
-        }
+    .hero-content { padding-right: 2rem; }
 
-        .service-card:hover {
-            transform: translateY(-5px);
-            border-color: #00d4ff;
-        }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+    }
 
-        .service-card h3 {
-            color: #00ff88;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
+    .hero-label::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
 
-        .service-card p {
-            color: #a0a0a0;
-        }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
 
-        /* 技术栈 */
-        #tech {
-            background: #0f1429;
-        }
+    .hero h1 span {
+      color: var(--accent);
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 2px;
+    }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
 
-        .tech-item {
-            background: #1a1f3a;
-            padding: 1.5rem 2rem;
-            border-radius: 5px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
-            font-weight: bold;
-        }
+    .hero-buttons { display: flex; gap: 1rem; }
 
-        /* 联系方式 */
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .contact-item {
-            background: #1a1f3a;
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-        }
+    .hero-image {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
 
-        .contact-item h3 {
-            color: #00ff88;
-            margin-bottom: 1rem;
-        }
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      opacity: 0.3;
+    }
 
-        .contact-item p {
-            color: #a0a0a0;
-        }
+    .hero-image::after {
+      content: '金';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: 6rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+    }
 
-        /* Footer */
-        footer {
-            background: #0a0e27;
-            padding: 2rem 5%;
-            text-align: center;
-            border-top: 1px solid rgba(0, 212, 255, 0.3);
-            color: #a0a0a0;
-        }
+    /* ==================== Stats Bar ==================== */
+    .stats-bar {
+      background: var(--primary);
+      padding: 3rem 2rem;
+    }
 
-        /* 响应式 */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.8rem;
-                padding: 0 1rem;
-            }
+    .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
 
-            .hero p {
-                font-size: 1.1rem;
-                padding: 0 1rem;
-            }
+    .stat-item { text-align: center; }
 
-            nav {
-                padding: 0.8rem 3%;
-            }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
 
-            nav ul {
-                justify-content: center;
-                gap: 1.2rem;
-                font-size: 0.9rem;
-            }
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.05em;
+    }
 
-            section {
-                padding: 3rem 4%;
-            }
+    /* ==================== Section Styles ==================== */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-            section h2 {
-                font-size: 2rem;
-            }
-        }
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
 
-        /* 全局文本换行保护 */
-        p, h1, h2, h3, h4, h5, h6 {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
 
-        /* 代码高亮风格 */
-        .code-snippet {
-            background: #0a0e27;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 5px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-family: 'Courier New', monospace;
-            color: #00ff88;
-            overflow-x: auto;
-        }
-    </style>
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ==================== Services Grid ==================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2.5rem 2rem;
+      transition: all 0.4s ease;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .service-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ==================== Features ==================== */
+    .features-section {
+      background: var(--surface);
+      padding: 5rem 2rem;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .features-list { display: grid; gap: 2rem; }
+
+    .feature-item {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: var(--background);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover { box-shadow: var(--shadow-sm); }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .feature-content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-content p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .features-visual {
+      background: var(--primary);
+      border-radius: var(--radius-md);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .features-visual::before {
+      content: 'JINYIMING';
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.05);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+    }
+
+    .features-visual::after {
+      content: '金';
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 8rem;
+      color: rgba(201, 168, 76, 0.2);
+      font-weight: 700;
+    }
+
+    /* ==================== CTA Section ==================== */
+    .cta-section {
+      background: var(--primary);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .cta-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-section .btn { padding: 0.9rem 2.5rem; }
+
+    /* ==================== Contact Section ==================== */
+    .contact-section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .contact-card {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .contact-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--background);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    .contact-card h4 {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-card p {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .contact-card a {
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-card a:hover { color: var(--accent); }
+
+    /* ==================== Footer ==================== */
+    footer {
+      background: var(--primary);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-container { max-width: 1200px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-brand .logo {
+      color: white;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-brand p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .footer-links h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links ul { list-style: none; }
+    .footer-links li { margin-bottom: 0.75rem; }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+    }
+
+    /* ==================== 在线客服系统 ==================== */
+    /* 悬浮客服按钮 */
+    .service-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .service-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--primary);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(201, 168, 76, 0.4);
+      position: relative;
+    }
+
+    .service-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 24px rgba(201, 168, 76, 0.5);
+    }
+
+    .service-btn.wechat {
+      background: #07C160;
+      color: white;
+      box-shadow: 0 4px 16px rgba(7, 193, 96, 0.4);
+    }
+
+    .service-btn.phone {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 16px rgba(26, 26, 26, 0.3);
+    }
+
+    /* 消息气泡提示 */
+    .service-btn .tip {
+      position: absolute;
+      right: 68px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .service-btn .tip::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: white;
+    }
+
+    .service-btn:hover .tip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 客服弹窗 */
+    .service-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .service-modal.active { display: flex; }
+
+    .service-modal-content {
+      background: white;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    .service-modal-header {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .service-modal-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .service-modal-close {
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.8;
+      line-height: 1;
+    }
+
+    .service-modal-close:hover { opacity: 1; }
+
+    .service-modal-body { padding: 1.5rem; }
+
+    /* 微信客服 */
+    .wechat-service {
+      text-align: center;
+    }
+
+    .wechat-service h4 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .wechat-qrcode {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+    }
+
+    .wechat-qrcode img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .wechat-qrcode .placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .wechat-qrcode .placeholder .icon {
+      font-size: 3rem;
+    }
+
+    .wechat-qrcode .placeholder span {
+      font-size: 0.9rem;
+    }
+
+    .wechat-service p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .wechat-service .wechat-id {
+      background: var(--background);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .wechat-service .wechat-id input {
+      border: none;
+      background: transparent;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      width: 120px;
+      text-align: center;
+    }
+
+    .wechat-service .wechat-id button {
+      background: var(--accent);
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .wechat-service .wechat-id button:hover {
+      background: var(--accent-light);
+    }
+
+    /* 在线留言 */
+    .message-form { margin-top: 1rem; }
+
+    .message-form input,
+    .message-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      font-family: var(--font-body);
+    }
+
+    .message-form textarea {
+      height: 80px;
+      resize: none;
+    }
+
+    .message-form button {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .message-form button:hover {
+      background: var(--accent-light);
+    }
+
+    /* 客服标签切换 */
+    .service-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-tab {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .service-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .service-tab-content {
+      display: none;
+      padding: 1rem;
+    }
+
+    .service-tab-content.active { display: block; }
+
+    /* 浮动导航按钮 */
+    .float-nav {
+      position: fixed;
+      right: 90px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 999;
+    }
+
+    .float-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .float-nav-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* ==================== Mobile Responsive ==================== */
+    @media (max-width: 968px) {
+      .nav-links, .nav-buttons { display: none; }
+      
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 8rem 2rem 4rem;
+        gap: 3rem;
+      }
+      
+      .hero-content { padding-right: 0; }
+      .hero-visual { order: -1; }
+      
+      .stats-container { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .features-visual { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .float-nav { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-container { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .service-float { right: 15px; bottom: 15px; }
+      .service-btn { width: 50px; height: 50px; font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav>
-        <ul>
-            <li><a href="#about">关于我们</a></li>
-            <li><a href="#services">服务项目</a></li>
-            <li><a href="#tech">技术栈</a></li>
-            <li><a href="#contact">联系方式</a></li>
-            <li><a href="platform/login.html" style="color: #00d4ff; font-weight: bold;">客户平台</a></li>
-        </ul>
-    </nav>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="#home">首页</a></li>
+        <li><a href="#services">服务项目</a></li>
+        <li><a href="#features">核心优势</a></li>
+        <li><a href="#contact">联系我们</a></li>
+        <li><a href="platform/login.html" style="color: var(--accent); font-weight: 600;">客户平台</a></li>
+      </ul>
+      <div class="nav-buttons">
+        <a href="platform/login.html" class="btn btn-ghost">登录</a>
+        <a href="#contact" class="btn btn-accent">立即咨询</a>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Hero区域 -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>厦门金奕鸣科技有限公司</h1>
-            <p>技术研发 · 软件开发 · 解决方案</p>
-            <a href="#contact" class="cta-button">联系我们</a>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-label">专业 · 创新 · 信赖</div>
+      <h1>用<span>技术</span>创造价值<br>让AI成为您的商业伙伴</h1>
+      <p>厦门金奕鸣科技有限公司专注于企业数字化转型与AI应用开发，为客户提供从咨询到落地的一站式解决方案，助力企业在智能时代赢得竞争优势。</p>
+      <div class="hero-buttons">
+        <a href="#services" class="btn btn-primary">了解更多</a>
+        <a href="#contact" class="btn btn-ghost">联系我们</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-image"></div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">成功案例</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">客户满意度</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">24h</div>
+        <div class="stat-label">响应速度</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3年</div>
+        <div class="stat-label">行业深耕</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Section -->
+  <section class="section" id="services">
+    <div class="section-header">
+      <p class="section-label">服务项目</p>
+      <h2 class="section-title">全方位数字化解决方案</h2>
+      <p class="section-desc">覆盖企业数字化转型全流程，从战略咨询到技术落地一体化服务</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <h3>智能客服系统</h3>
+        <p>基于大模型的智能客服，7×24小时即时响应，精准理解客户需求，大幅降低人力成本。</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>数据可视化平台</h3>
+        <p>企业级数据大屏解决方案，实时展示业务数据，辅助科学决策，洞察市场趋势。</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <h3>业务流程自动化</h3>
+        <p>RPA机器人流程自动化，替代重复性工作，让员工专注高价值任务。</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>移动应用开发</h3>
+        <p>iOS、Android双平台原生开发，跨平台框架一站式部署，快速触达用户。</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>企业官网定制</h3>
+        <p>高端品牌网站设计与开发，响应式布局，SEO优化，提升企业线上形象。</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">☁️</div>
+        <h3>云服务部署</h3>
+        <p>阿里云、腾讯云架构设计与迁移，弹性扩容方案，确保系统稳定安全。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="features-container">
+      <div class="section-header">
+        <p class="section-label">核心优势</p>
+        <h2 class="section-title">为什么选择金奕鸣科技</h2>
+      </div>
+      <div class="features-grid">
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-content">
+              <h4>深度行业洞察</h4>
+              <p>深耕企业服务领域多年，深刻理解行业痛点，提供针对性解决方案。</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-content">
+              <h4>敏捷交付能力</h4>
+              <p>采用敏捷开发方法论，快速迭代交付，确保项目按时高质量上线。</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-content">
+              <h4>企业级安全保障</h4>
+              <p>数据加密、权限控制、安全审计全方位保护，让您的数据资产安全无忧。</p>
+            </div>
+          </div>
         </div>
-    </section>
+        <div class="features-visual"></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 关于我们 -->
-    <section id="about">
-        <h2>关于我们</h2>
-        <p>
-            厦门金奕鸣科技有限公司是一家专注于技术研发和软件开发的一人科技有限公司，致力于为客户提供高质量的技术解决方案。
-            我们拥有多年的行业经验和专业技术能力，擅长运用AI技术（ChatGPT、Codex等）赋能软件开发，提高交付效率。
-            公司业务涵盖定制软件开发、AI技术咨询、UI/UX设计、技术顾问等领域，以零成本运营模式和专业技术能力，
-            为每位客户创造最大价值。
-        </p>
-        
-        <div class="code-snippet">
-            <pre>
-// 我们的使命
-const mission = "用技术创造价值";
-const vision = "让AI成为每个开发者的助手";
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2>开启您的数字化转型之旅</h2>
+      <p>联系我们，获取专业咨询与定制化解决方案，让技术真正为您的业务赋能</p>
+      <a href="#contact" class="btn btn-accent">立即预约咨询</a>
+    </div>
+  </section>
 
-function deliverValue(clientNeeds) {
-    return analyzeRequirements(clientNeeds)
-        .then(designSolution)
-        .then(developWithAI)
-        .then(deployAndMaintain);
-}
-            </pre>
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="section-header">
+      <p class="section-label">联系我们</p>
+      <h2 class="section-title">期待与您的合作</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h4>联系电话</h4>
+        <p><a href="tel:13599530881">135 9953 0881</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <h4>电子邮箱</h4>
+        <p><a href="mailto:xmwcg@163.com">xmwcg@163.com</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h4>公司地址</h4>
+        <p>福建省厦门市海沧区<br>海发路135号933室</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">金奕鸣科技</a>
+          <p>厦门金奕鸣科技有限公司<br>用技术创造价值，让AI成为每个企业的助手</p>
+          <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+            <a href="javascript:void(0);" onclick="openServiceModal('wechat')" style="display: inline-flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;">
+              <span>💬</span> 微信客服
+            </a>
+            <a href="tel:13599530881" style="display: inline-flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;">
+              <span>📞</span> 电话咨询
+            </a>
+          </div>
         </div>
-    </section>
-
-    <!-- 服务项目 -->
-    <section id="services">
-        <h2>服务项目</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>💻 定制软件开发</h3>
-                <p>根据客户需求，提供定制化的软件开发服务，包括Web应用、移动应用、桌面应用等。</p>
-            </div>
-            <div class="service-card">
-                <h3>🤖 AI技术咨询</h3>
-                <p>为客户提供AI技术应用咨询，包括ChatGPT集成、自动化流程设计、AI工具选型等。</p>
-            </div>
-            <div class="service-card">
-                <h3>🎨 UI/UX设计</h3>
-                <p>提供专业的用户界面和用户体验设计服务，确保产品既美观又易用。</p>
-            </div>
-            <div class="service-card">
-                <h3>📊 技术顾问</h3>
-                <p>为企业提供技术架构咨询、技术选型建议、代码审查等技术服务。</p>
-            </div>
+        <div class="footer-links">
+          <h4>产品服务</h4>
+          <ul>
+            <li><a href="products.html">智能客服系统</a></li>
+            <li><a href="products.html">数据分析平台</a></li>
+            <li><a href="products.html">流程自动化</a></li>
+          </ul>
         </div>
-    </section>
-
-    <!-- 客户平台入口 -->
-    <section id="platform" style="background: linear-gradient(135deg, #1a1f3a 0%, #0f1429 100%); padding: 5rem 5%; max-width: 100%;">
-        <h2 style="color: #00d4ff; font-size: 2.5rem; margin-bottom: 3rem; text-align: center;">🚀 客户专属平台</h2>
-        <div class="services-grid">
-            <div class="service-card" style="border-color: rgba(0, 212, 255, 0.3);">
-                <h3>📁 文件管理中心</h3>
-                <p>安全存储、分类管理、快捷分享您的项目文件，支持多格式预览和版本管理。</p>
-            </div>
-            <div class="service-card" style="border-color: rgba(0, 212, 255, 0.3);">
-                <h3>💬 实时消息中心</h3>
-                <p>与团队成员即时沟通，文件协作评论，系统通知提醒，工作更高效。</p>
-            </div>
-            <div class="service-card" style="border-color: rgba(0, 212, 255, 0.3);">
-                <h3>📊 项目仪表盘</h3>
-                <p>可视化项目进度，文件统计，存储用量一目了然，轻松掌控全局。</p>
-            </div>
+        <div class="footer-links">
+          <h4>关于公司</h4>
+          <ul>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="about.html">成功案例</a></li>
+            <li><a href="about.html">新闻动态</a></li>
+          </ul>
         </div>
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="platform/login.html" style="display: inline-block; padding: 1rem 3rem; background: linear-gradient(45deg, #00d4ff, #00ff88); color: #0a0e27; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 1.1rem; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(0, 212, 255, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none'">立即进入平台 →</a>
+        <div class="footer-links">
+          <h4>法律信息</h4>
+          <ul>
+            <li><a href="legal.html">服务条款</a></li>
+            <li><a href="legal.html">隐私政策</a></li>
+            <li><a href="legal.html">ICP备案</a></li>
+          </ul>
         </div>
-    </section>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 厦门金奕鸣科技有限公司 版权所有 | 闽ICP备20260001号</p>
+      </div>
+    </div>
+  </footer>
 
-    <!-- 技术栈 -->
-    <section id="tech">
-        <h2>技术栈</h2>
-        <div class="tech-stack">
-            <div class="tech-item">Python</div>
-            <div class="tech-item">JavaScript/TypeScript</div>
-            <div class="tech-item">Node.js</div>
-            <div class="tech-item">React/Vue</div>
-            <div class="tech-item">FastAPI</div>
-            <div class="tech-item">PostgreSQL</div>
-            <div class="tech-item">MongoDB</div>
-            <div class="tech-item">Git/GitHub</div>
-            <div class="tech-item">Docker</div>
-            <div class="tech-item">AWS/阿里云</div>
-            <div class="tech-item">ChatGPT/AI工具</div>
+  <!-- 客服弹窗 -->
+  <div class="service-modal" id="serviceModal">
+    <div class="service-modal-content">
+      <div class="service-modal-header">
+        <h3>在线客服</h3>
+        <span class="service-modal-close" onclick="closeServiceModal()">&times;</span>
+      </div>
+      <div class="service-tabs">
+        <div class="service-tab active" onclick="switchTab('wechat')">💬 微信客服</div>
+        <div class="service-tab" onclick="switchTab('message')">📝 在线留言</div>
+      </div>
+      <div class="service-tab-content active" id="wechatTab">
+        <div class="wechat-service">
+          <h4>扫码添加客服微信</h4>
+          <div class="wechat-qrcode">
+            <img src="images/wechat-qrcode.png" alt="微信二维码" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none;">
+              <div class="icon">💬</div>
+              <span>微信二维码</span>
+              <span style="font-size:0.8rem; color:#ccc;">请上传二维码图片</span>
+            </div>
+          </div>
+          <p>打开微信扫一扫，添加好友</p>
+          <div class="wechat-id">
+            <span>或搜索：</span>
+            <input type="text" value="xmwcg001" id="wechatId" readonly>
+            <button onclick="copyWechatId()">复制</button>
+          </div>
         </div>
-    </section>
+      </div>
+      <div class="service-tab-content" id="messageTab">
+        <form class="message-form" onsubmit="submitMessage(event)">
+          <input type="text" name="name" placeholder="您的姓名" required>
+          <input type="tel" name="phone" placeholder="联系电话" required>
+          <textarea name="message" placeholder="请输入您想咨询的问题..." required></textarea>
+          <button type="submit">提交咨询</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
-    <!-- 联系方式 -->
-    <section id="contact">
-        <h2>联系方式</h2>
-        <div class="contact-info">
-            <div class="contact-item">
-                <h3>📧 邮箱</h3>
-                <p>xmwcg@163.com</p>
-            </div>
-            <div class="contact-item">
-                <h3>📱 电话</h3>
-                <p>13599530881（王先生）</p>
-            </div>
-            <div class="contact-item">
-                <h3>🏢 地址</h3>
-                <p>厦门海沧区海发路135号933室</p>
-            </div>
-            <div class="contact-item">
-                <h3>🌐 GitHub</h3>
-                <p>github.com/xmwcg</p>
-            </div>
-        </div>
-    </section>
+  <!-- 浮动导航按钮 -->
+  <div class="float-nav">
+    <button class="float-nav-btn" onclick="scrollToTop()" title="返回顶部">↑</button>
+    <button class="float-nav-btn" onclick="scrollToEnd()" title="返回底部">↓</button>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 厦门金奕鸣科技有限公司. All rights reserved. | 一人科技有限公司</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">用AI赋能开发 · 用技术驱动创新</p>
-    </footer>
+  <!-- 悬浮客服按钮 -->
+  <div class="service-float">
+    <button class="service-btn wechat" onclick="openServiceModal('wechat')" title="微信客服">
+      💬
+      <span class="tip">微信客服</span>
+    </button>
+    <button class="service-btn phone" onclick="window.location.href='tel:13599530881'" title="电话咨询">
+      📞
+      <span class="tip">电话咨询</span>
+    </button>
+  </div>
 
-    <script>
-        // 平滑滚动
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+  <script>
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
 
-        // 导航栏高亮
-        window.addEventListener('scroll', function() {
-            let sections = document.querySelectorAll('section');
-            let navLinks = document.querySelectorAll('nav a');
-            
-            sections.forEach(section => {
-                let top = section.offsetTop - 100;
-                let height = section.offsetHeight;
-                let id = section.getAttribute('id');
-                
-                if (window.scrollY >= top && window.scrollY < top + height) {
-                    navLinks.forEach(link => {
-                        link.style.color = '#e0e0e0';
-                        if (link.getAttribute('href') === '#' + id) {
-                            link.style.color = '#00d4ff';
-                        }
-                    });
-                }
-            });
-        });
-    </script>
+    // 返回顶部
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 返回底部
+    function scrollToEnd() {
+      const footer = document.getElementById('footer');
+      if (footer) {
+        footer.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    }
+
+    // 打开客服弹窗
+    function openServiceModal(tab) {
+      document.getElementById('serviceModal').classList.add('active');
+      if (tab === 'message') {
+        switchTab('message');
+      }
+    }
+
+    // 关闭客服弹窗
+    function closeServiceModal() {
+      document.getElementById('serviceModal').classList.remove('active');
+    }
+
+    // 点击弹窗背景关闭
+    document.getElementById('serviceModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeServiceModal();
+      }
+    });
+
+    // 切换标签
+    function switchTab(tabName) {
+      // 切换标签按钮
+      document.querySelectorAll('.service-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // 切换内容
+      document.querySelectorAll('.service-tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(tabName + 'Tab').classList.add('active');
+    }
+
+    // 复制微信号
+    function copyWechatId() {
+      const input = document.getElementById('wechatId');
+      input.select();
+      document.execCommand('copy');
+      alert('微信号已复制：' + input.value + '\n请到微信中添加好友');
+    }
+
+    // 提交留言
+    function submitMessage(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const phone = form.phone.value;
+      const message = form.message.value;
+      
+      alert('感谢您的咨询！\n\n姓名：' + name + '\n电话：' + phone + '\n内容：' + message + '\n\n我们将在24小时内与您联系。');
+      form.reset();
+      closeServiceModal();
+    }
+  </script>
 </body>
 </html>

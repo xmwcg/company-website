@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>充值中心 - 金奕鸣科技</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A1A1A;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+
+    * { margin:0; padding:0; box-sizing: border-box; }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, #A68A3A 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .main {
+      padding-top: 64px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .balance-card {
+      background: linear-gradient(135deg, var(--primary) 0%, #2D2D2D 100%);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .balance-label {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .balance-amount {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .balance-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--font-body);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: none;
+      color: var(--primary);
+    }
+
+    .btn-accent:hover { background: var(--accent-light); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .recharge-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .recharge-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .recharge-card:hover, .recharge-card.selected {
+      border-color: var(--accent);
+      background: rgba(201, 168, 76, 0.05);
+    }
+
+    .recharge-amount {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .recharge-price {
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .recharge-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .payment-method {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method:hover, .payment-method.selected {
+      border-color: var(--accent);
+    }
+
+    .payment-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .payment-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .btn-pay {
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-pay:hover { background: var(--accent-light); }
+
+    .transactions {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .transaction-item:last-child { border-bottom: none; }
+
+    .transaction-info h4 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .transaction-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .transaction-amount {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .transaction-amount.positive { color: #16A34A; }
+    .transaction-amount.negative { color: var(--text-primary); }
+
+    @media (max-width: 768px) {
+      .payment-methods { grid-template-columns: 1fr; }
+      .balance-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      
+      <div class="header-right">
+        <div class="user-info">
+          <div class="user-avatar">李</div>
+          <span>李先生</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <h1 class="page-title">💳 充值中心</h1>
+
+    <!-- 余额卡片 -->
+    <div class="balance-card">
+      <div class="balance-label">当前余额</div>
+      <div class="balance-amount">¥ 0.00</div>
+      <div class="balance-actions">
+        <button class="btn btn-accent" onclick="alert('充值功能需要后端支持\n当前为静态演示版本')">充值记录</button>
+        <button class="btn btn-ghost" onclick="alert('开具发票功能需要后端支持')">开具发票</button>
+      </div>
+    </div>
+
+    <!-- 充值金额选择 -->
+    <h2 class="section-title">选择充值金额</h2>
+    <div class="recharge-options">
+      <div class="recharge-card" onclick="selectRecharge(this, 100)">
+        <div class="recharge-amount">¥100</div>
+        <div class="recharge-price">¥100</div>
+        <div class="recharge-desc">适合轻度使用</div>
+      </div>
+      <div class="recharge-card selected" onclick="selectRecharge(this, 500)">
+        <div class="recharge-amount">¥500</div>
+        <div class="recharge-price">¥500 <span style="color: var(--accent-light); font-size: 0.8rem;">送¥25</span></div>
+        <div class="recharge-desc">最受欢迎</div>
+      </div>
+      <div class="recharge-card" onclick="selectRecharge(this, 1000)">
+        <div class="recharge-amount">¥1000</div>
+        <div class="recharge-price">¥1000 <span style="color: var(--accent-light); font-size: 0.8rem;">送¥80</span></div>
+        <div class="recharge-desc">适合企业用户</div>
+      </div>
+      <div class="recharge-card" onclick="selectRecharge(this, 5000)">
+        <div class="recharge-amount">¥5000</div>
+        <div class="recharge-price">¥5000 <span style="color: var(--accent-light); font-size: 0.8rem;">送¥500</span></div>
+        <div class="recharge-desc">尊享VIP服务</div>
+      </div>
+    </div>
+
+    <!-- 支付方式 -->
+    <h2 class="section-title">选择支付方式</h2>
+    <div class="payment-methods">
+      <div class="payment-method selected" onclick="selectPayment(this, 'wechat')">
+        <div class="payment-icon">💚</div>
+        <div class="payment-name">微信支付</div>
+      </div>
+      <div class="payment-method" onclick="selectPayment(this, 'alipay')">
+        <div class="payment-icon">💙</div>
+        <div class="payment-name">支付宝</div>
+      </div>
+      <div class="payment-method" onclick="selectPayment(this, 'bank')">
+        <div class="payment-icon">🏦</div>
+        <div class="payment-name">银行卡</div>
+      </div>
+    </div>
+
+    <button class="btn-pay" id="payBtn" onclick="doRecharge()">立即支付 ¥500</button>
+
+    <!-- 交易记录 -->
+    <h2 class="section-title" style="margin-top: 3rem;">交易记录</h2>
+    <div class="transactions">
+      <div class="transaction-item">
+        <div class="transaction-info">
+          <h4>充值</h4>
+          <p>2026-05-15 14:32</p>
+        </div>
+        <div class="transaction-amount positive">+¥500.00</div>
+      </div>
+      <div class="transaction-item">
+        <div class="transaction-info">
+          <h4>文件存储费用</h4>
+          <p>2026-05-10 09:15</p>
+        </div>
+        <div class="transaction-amount negative">-¥9.90</div>
+      </div>
+      <div class="transaction-item">
+        <div class="transaction-info">
+          <h4>充值</h4>
+          <p>2026-05-01 16:45</p>
+        </div>
+        <div class="transaction-amount positive">+¥100.00</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let selectedAmount = 500;
+    let selectedPayment = 'wechat';
+
+    function selectRecharge(card, amount) {
+      document.querySelectorAll('.recharge-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedAmount = amount;
+      document.getElementById('payBtn').textContent = '立即支付 ¥' + amount;
+    }
+
+    function selectPayment(method, type) {
+      document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+      method.classList.add('selected');
+      selectedPayment = type;
+    }
+
+    function doRecharge() {
+      alert('即将跳转支付页面...\n\n当前为静态演示版本\n实际项目中会跳转到微信/支付宝支付界面');
+    }
+  </script>
+</body>
+</html>
