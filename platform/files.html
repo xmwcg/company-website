@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件管理 - 金奕鸣科技</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ==================== Header ==================== */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .header-nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-item {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--background);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* ==================== Main Content ==================== */
+    .main {
+      padding-top: 64px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ==================== Page Header ==================== */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    .storage-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .storage-bar {
+      width: 200px;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .storage-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+      border-radius: 4px;
+      width: 24%;
+      transition: width 0.3s ease;
+    }
+
+    .storage-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==================== Toolbar ==================== */
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--text-muted); }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      font-family: var(--font-body);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    .btn-primary:hover { background: var(--accent-light); }
+
+    .btn-ghost {
+      background: var(--background);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 0.6rem 1rem 0.6rem 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      width: 240px;
+      font-family: var(--font-body);
+      background: var(--background);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+    }
+
+    .view-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .view-btn {
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .view-btn.active {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    /* ==================== File List ==================== */
+    .file-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .file-list-header {
+      display: grid;
+      grid-template-columns: 40px 1fr 120px 120px 150px;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--background);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .file-list {
+      list-style: none;
+    }
+
+    .file-item {
+      display: grid;
+      grid-template-columns: 40px 1fr 120px 120px 150px;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    .file-item:last-child { border-bottom: none; }
+    .file-item:hover { background: rgba(201, 168, 76, 0.03); }
+    .file-item.selected { background: rgba(201, 168, 76, 0.08); }
+
+    .file-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .file-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .file-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .file-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-size, .file-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+    }
+
+    .action-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+
+    /* ==================== Upload Area ==================== */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .upload-area:hover, .upload-area.dragover {
+      border-color: var(--accent);
+      background: rgba(201, 168, 76, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .upload-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .upload-input {
+      display: none;
+    }
+
+    /* ==================== Empty State ==================== */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ==================== Share Modal ==================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.show .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--background);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .share-link-box {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .share-link-input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      background: var(--background);
+    }
+
+    .share-options {
+      margin-top: 1rem;
+    }
+
+    .share-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .share-option:last-child { border-bottom: none; }
+
+    .share-option label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .share-option select {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      background: var(--surface);
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      background: var(--background);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* ==================== Mobile Responsive ==================== */
+    @media (max-width: 1024px) {
+      .file-list-header { display: none; }
+      .file-item {
+        grid-template-columns: 40px 1fr;
+        grid-template-rows: auto auto;
+      }
+      .file-size, .file-date { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .toolbar-left, .toolbar-right { justify-content: space-between; }
+      .search-input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item">控制台</a>
+        <a href="files.html" class="nav-item active">文件管理</a>
+        <a href="messages.html" class="nav-item">消息中心</a>
+        <a href="#" class="nav-item">我的项目</a>
+      </nav>
+
+      <div class="header-right">
+        <div class="user-info">
+          <div class="user-avatar">李</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">📂 文件管理</h1>
+        <div class="storage-info">
+          <div class="storage-bar">
+            <div class="storage-fill"></div>
+          </div>
+          <span class="storage-text">2.4 GB / 10 GB</span>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="breadcrumb">
+            <a href="#">全部文件</a>
+            <span>›</span>
+            <a href="#">我的文档</a>
+            <span>›</span>
+            <span>项目资料</span>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-ghost" id="newFolderBtn">📁 新建文件夹</button>
+          <button class="btn btn-primary" id="uploadBtn">📤 上传文件</button>
+          <div class="search-box">
+            <input type="text" class="search-input" placeholder="搜索文件...">
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="list">☰</button>
+            <button class="view-btn" data-view="grid">▦</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Area -->
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📤</div>
+        <p class="upload-text">拖拽文件到此处，或点击选择文件</p>
+        <p class="upload-hint">支持任意文件类型，单文件最大 100MB</p>
+        <input type="file" class="upload-input" id="fileInput" multiple>
+      </div>
+
+      <!-- File List -->
+      <div class="file-container">
+        <div class="file-list-header">
+          <span></span>
+          <span>文件名</span>
+          <span>大小</span>
+          <span>修改日期</span>
+          <span>操作</span>
+        </div>
+        <ul class="file-list" id="fileList">
+          <li class="file-item" data-id="1">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">📁</span>
+              <span class="file-name">项目文档</span>
+            </div>
+            <span class="file-size">-</span>
+            <span class="file-date">今天 09:30</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="2">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">📁</span>
+              <span class="file-name">图片素材</span>
+            </div>
+            <span class="file-size">-</span>
+            <span class="file-date">昨天 16:45</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="3">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">📄</span>
+              <span class="file-name">项目方案_V2.3.docx</span>
+            </div>
+            <span class="file-size">2.4 MB</span>
+            <span class="file-date">今天 14:32</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn share-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="4">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">📊</span>
+              <span class="file-name">Q1数据分析报告.xlsx</span>
+            </div>
+            <span class="file-size">856 KB</span>
+            <span class="file-date">昨天 16:20</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn share-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="5">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">🖼️</span>
+              <span class="file-name">产品原型图.png</span>
+            </div>
+            <span class="file-size">3.2 MB</span>
+            <span class="file-date">前天 09:15</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn share-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="6">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">📦</span>
+              <span class="file-name">培训资料.zip</span>
+            </div>
+            <span class="file-size">45.6 MB</span>
+            <span class="file-date">5月12日</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn share-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="7">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">🎬</span>
+              <span class="file-name">产品宣传片.mp4</span>
+            </div>
+            <span class="file-size">128.5 MB</span>
+            <span class="file-date">5月10日</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn share-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+          <li class="file-item" data-id="8">
+            <input type="checkbox" class="file-checkbox">
+            <div class="file-name-cell">
+              <span class="file-icon">📝</span>
+              <span class="file-name">会议纪要.pdf</span>
+            </div>
+            <span class="file-size">245 KB</span>
+            <span class="file-date">5月8日</span>
+            <div class="file-actions">
+              <button class="action-btn" title="下载">⬇️</button>
+              <button class="action-btn share-btn" title="分享">🔗</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- Share Modal -->
+  <div class="modal-overlay" id="shareModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">🔗 创建分享链接</h3>
+        <button class="modal-close" id="closeModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="share-link-box">
+          <input type="text" class="share-link-input" id="shareLink" value="https://jinying.cn/f/s8xK2m" readonly>
+          <button class="btn btn-primary" id="copyLink">复制</button>
+        </div>
+        <div class="share-options">
+          <div class="share-option">
+            <label>链接有效期</label>
+            <select id="linkExpire">
+              <option value="1h">1小时后失效</option>
+              <option value="24h">24小时后失效</option>
+              <option value="7d" selected>7天后失效</option>
+              <option value="never">永不过期</option>
+            </select>
+          </div>
+          <div class="share-option">
+            <label>访问密码</label>
+            <select id="linkPassword">
+              <option value="none">无密码</option>
+              <option value="custom">设置密码</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="cancelShare">取消</button>
+        <button class="btn btn-primary" id="createShare">创建链接</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 上传区域
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFiles(files);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFiles(e.target.files);
+      }
+    });
+
+    function handleFiles(files) {
+      for (let file of files) {
+        console.log('上传文件:', file.name, file.size);
+      }
+      alert(`已选择 ${files.length} 个文件`);
+    }
+
+    // 新建文件夹
+    document.getElementById('newFolderBtn').addEventListener('click', () => {
+      const name = prompt('请输入文件夹名称：');
+      if (name) {
+        alert('文件夹 "' + name + '" 创建成功！');
+      }
+    });
+
+    // 分享功能
+    const shareModal = document.getElementById('shareModal');
+    const shareBtns = document.querySelectorAll('.share-btn');
+
+    shareBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        shareModal.classList.add('show');
+      });
+    });
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+      shareModal.classList.remove('show');
+    });
+
+    document.getElementById('cancelShare').addEventListener('click', () => {
+      shareModal.classList.remove('show');
+    });
+
+    document.getElementById('copyLink').addEventListener('click', () => {
+      const link = document.getElementById('shareLink');
+      link.select();
+      document.execCommand('copy');
+      alert('链接已复制到剪贴板！');
+    });
+
+    shareModal.addEventListener('click', (e) => {
+      if (e.target === shareModal) {
+        shareModal.classList.remove('show');
+      }
+    });
+
+    // 文件选择
+    document.querySelectorAll('.file-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        this.closest('.file-item').classList.toggle('selected', this.checked);
+      });
+    });
+
+    // 删除功能
+    document.querySelectorAll('.action-btn[title="删除"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const item = this.closest('.file-item');
+        const name = item.querySelector('.file-name').textContent;
+        if (confirm(`确定要删除 "${name}" 吗？`)) {
+          item.remove();
+          alert('文件已删除');
+        }
+      });
+    });
+
+    // 视图切换
+    document.querySelectorAll('.view-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

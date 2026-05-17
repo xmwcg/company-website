@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>控制台 - 金奕鸣科技客户平台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ==================== Header ==================== */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .header-nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-item {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--background);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .user-dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      min-width: 180px;
+      display: none;
+      z-index: 100;
+    }
+
+    .dropdown-menu.show { display: block; }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+      background: var(--background);
+      color: var(--text-primary);
+    }
+
+    .dropdown-item.danger {
+      color: #E53935;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.25rem 0;
+    }
+
+    /* ==================== Main Content ==================== */
+    .main {
+      padding-top: 64px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ==================== Page Header ==================== */
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-breadcrumb {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .page-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .page-breadcrumb a:hover { color: var(--accent); }
+
+    /* ==================== Stats Cards ==================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--background);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .stat-content { flex: 1; }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==================== Quick Actions ==================== */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quick-actions {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem 1rem;
+      background: var(--background);
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .action-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .action-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ==================== Recent Files ==================== */
+    .recent-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header .section-title {
+      margin-bottom: 0;
+    }
+
+    .view-all {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .file-list {
+      list-style: none;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    .file-item:last-child { border-bottom: none; }
+    .file-item:hover { background: var(--background); }
+
+    .file-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--background);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .file-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    .btn-icon:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ==================== Messages Preview ==================== */
+    .messages-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .message-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    .message-item:last-child { border-bottom: none; }
+    .message-item:hover { background: var(--background); }
+
+    .message-item.unread {
+      background: rgba(201, 168, 76, 0.05);
+    }
+
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--background);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .message-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .message-preview {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .message-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .unread-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-left: 0.5rem;
+    }
+
+    /* ==================== Two Column Layout ==================== */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+    }
+
+    /* ==================== Mobile Responsive ==================== */
+    @media (max-width: 1200px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .actions-grid { grid-template-columns: repeat(2, 1fr); }
+      .content-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .user-name { display: none; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .actions-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item active">控制台</a>
+        <a href="files.html" class="nav-item">文件管理</a>
+        <a href="messages.html" class="nav-item">消息中心</a>
+        <a href="#" class="nav-item">我的项目</a>
+      </nav>
+
+      <div class="header-right">
+        <div class="user-dropdown">
+          <div class="user-info" id="userDropdown">
+            <div class="user-avatar">李</div>
+            <span class="user-name">李先生</span>
+            <span>▼</span>
+          </div>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#" class="dropdown-item">👤 个人资料</a>
+            <a href="#" class="dropdown-item">⚙️ 账户设置</a>
+            <a href="#" class="dropdown-item">💳 充值中心</a>
+            <div class="dropdown-divider"></div>
+            <a href="login.html" class="dropdown-item danger">🚪 退出登录</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">欢迎回来，李先生</h1>
+        <p class="page-breadcrumb">
+          <a href="index.html">控制台</a> / 首页
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📁</div>
+          <div class="stat-content">
+            <div class="stat-value">28</div>
+            <div class="stat-label">我的文件</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔗</div>
+          <div class="stat-content">
+            <div class="stat-value">12</div>
+            <div class="stat-label">分享链接</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💬</div>
+          <div class="stat-content">
+            <div class="stat-value">5</div>
+            <div class="stat-label">未读消息</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-content">
+            <div class="stat-value">2.4GB</div>
+            <div class="stat-label">存储用量</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h2 class="section-title">快捷操作</h2>
+        <div class="actions-grid">
+          <a href="files.html" class="action-btn">
+            <div class="action-icon">📤</div>
+            <span class="action-label">上传文件</span>
+          </a>
+          <a href="#" class="action-btn" id="newFolderBtn">
+            <div class="action-icon">📁</div>
+            <span class="action-label">新建文件夹</span>
+          </a>
+          <a href="#" class="action-btn">
+            <div class="action-icon">🔗</div>
+            <span class="action-label">创建分享</span>
+          </a>
+          <a href="messages.html" class="action-btn">
+            <div class="action-icon">✉️</div>
+            <span class="action-label">发消息</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Content Grid -->
+      <div class="content-grid">
+        <!-- Recent Files -->
+        <div class="recent-section">
+          <div class="section-header">
+            <h2 class="section-title">📂 最近文件</h2>
+            <a href="files.html" class="view-all">查看全部 →</a>
+          </div>
+          <ul class="file-list">
+            <li class="file-item">
+              <div class="file-icon">📄</div>
+              <div class="file-info">
+                <div class="file-name">项目方案_V2.3.docx</div>
+                <div class="file-meta">Word文档 · 2.4MB · 今天 14:32</div>
+              </div>
+              <div class="file-actions">
+                <button class="btn-icon" title="下载">⬇️</button>
+                <button class="btn-icon" title="分享">🔗</button>
+              </div>
+            </li>
+            <li class="file-item">
+              <div class="file-icon">📊</div>
+              <div class="file-info">
+                <div class="file-name">Q1数据分析报告.xlsx</div>
+                <div class="file-meta">Excel表格 · 856KB · 昨天 16:20</div>
+              </div>
+              <div class="file-actions">
+                <button class="btn-icon" title="下载">⬇️</button>
+                <button class="btn-icon" title="分享">🔗</button>
+              </div>
+            </li>
+            <li class="file-item">
+              <div class="file-icon">🖼️</div>
+              <div class="file-info">
+                <div class="file-name">产品原型图.png</div>
+                <div class="file-meta">图片 · 3.2MB · 前天 09:15</div>
+              </div>
+              <div class="file-actions">
+                <button class="btn-icon" title="下载">⬇️</button>
+                <button class="btn-icon" title="分享">🔗</button>
+              </div>
+            </li>
+            <li class="file-item">
+              <div class="file-icon">📦</div>
+              <div class="file-info">
+                <div class="file-name">培训资料.zip</div>
+                <div class="file-meta">压缩包 · 45.6MB · 5月12日</div>
+              </div>
+              <div class="file-actions">
+                <button class="btn-icon" title="下载">⬇️</button>
+                <button class="btn-icon" title="分享">🔗</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages-section">
+          <div class="section-header">
+            <h2 class="section-title">💬 最新消息</h2>
+            <a href="messages.html" class="view-all">查看全部 →</a>
+          </div>
+          <div class="message-item unread">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+              <div class="message-title">智能客服 <span class="unread-dot"></span></div>
+              <div class="message-preview">您好！您的工单已处理完成...</div>
+            </div>
+            <div class="message-time">5分钟前</div>
+          </div>
+          <div class="message-item unread">
+            <div class="message-avatar">📢</div>
+            <div class="message-content">
+              <div class="message-title">系统通知 <span class="unread-dot"></span></div>
+              <div class="message-preview">您的文件"项目方案"已被分享...</div>
+            </div>
+            <div class="message-time">1小时前</div>
+          </div>
+          <div class="message-item">
+            <div class="message-avatar">👤</div>
+            <div class="message-content">
+              <div class="message-title">王经理</div>
+              <div class="message-preview">好的，收到，明天上午见...</div>
+            </div>
+            <div class="message-time">昨天</div>
+          </div>
+          <div class="message-item">
+            <div class="message-avatar">📋</div>
+            <div class="message-content">
+              <div class="message-title">任务提醒</div>
+              <div class="message-preview">您有一个待处理的任务：...</div>
+            </div>
+            <div class="message-time">2天前</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 用户下拉菜单
+    document.getElementById('userDropdown').addEventListener('click', function(e) {
+      e.stopPropagation();
+      document.getElementById('dropdownMenu').classList.toggle('show');
+    });
+
+    document.addEventListener('click', function() {
+      document.getElementById('dropdownMenu').classList.remove('show');
+    });
+
+    // 新建文件夹
+    document.getElementById('newFolderBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const folderName = prompt('请输入文件夹名称：');
+      if (folderName) {
+        alert('文件夹 "' + folderName + '" 创建成功！');
+      }
+    });
+  </script>
+</body>
+</html>

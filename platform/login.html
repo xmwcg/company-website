@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - 金奕鸣科技</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.08);
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .login-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-logo span { color: var(--accent); }
+
+    .login-header h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-header p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .login-tabs {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .login-tab {
+      padding-bottom: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .login-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .input-group .form-input { flex: 1; }
+
+    .btn-code {
+      padding: 0.85rem 1.25rem;
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .btn-code:hover {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+    }
+
+    .btn-code:disabled {
+      background: var(--border);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn-login:hover { background: var(--accent); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .social-login {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-social {
+      flex: 1;
+      padding: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-social:hover {
+      border-color: var(--accent);
+      background: var(--background);
+    }
+
+    .btn-wechat {
+      background: #07C160;
+      border-color: #07C160;
+      color: white;
+    }
+
+    .btn-wechat:hover {
+      background: #06AD56;
+      border-color: #06AD56;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .login-footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .login-footer a:hover { text-decoration: underline; }
+
+    .back-home {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-home:hover { color: var(--accent); }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    @media (max-width: 480px) {
+      .login-card { padding: 2rem 1.5rem; }
+      .input-group { flex-direction: column; }
+      .btn-code { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <a href="../index.html" class="back-home">← 返回首页</a>
+    
+    <div class="login-card">
+      <div class="login-header">
+        <a href="../index.html" class="login-logo">金<span>奕</span>鸣科技</a>
+        <h1>欢迎回来</h1>
+        <p>登录您的账户，继续探索</p>
+      </div>
+
+      <!-- 登录表单 -->
+      <div id="loginPanel" class="form-panel active">
+        <div class="login-tabs">
+          <button class="login-tab active" data-tab="phone">手机登录</button>
+          <button class="login-tab" data-tab="password">密码登录</button>
+        </div>
+
+        <!-- 手机验证码登录 -->
+        <div id="phoneLogin">
+          <div class="form-group">
+            <label class="form-label">手机号码</label>
+            <input type="tel" class="form-input" id="loginPhone" placeholder="请输入手机号" maxlength="11">
+          </div>
+          <div class="form-group">
+            <label class="form-label">验证码</label>
+            <div class="input-group">
+              <input type="text" class="form-input" id="loginCode" placeholder="请输入验证码" maxlength="6">
+              <button type="button" class="btn-code" id="sendCode">获取验证码</button>
+            </div>
+          </div>
+          <button type="button" class="btn-login" id="phoneLoginBtn">登 录</button>
+
+          <div class="divider">其他登录方式</div>
+
+          <div class="social-login">
+            <button class="btn-social btn-wechat" id="wechatLogin">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.269-.03-.406-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
+              </svg>
+              微信登录
+            </button>
+          </div>
+        </div>
+
+        <!-- 密码登录 -->
+        <div id="passwordLogin" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">手机号码 / 邮箱</label>
+            <input type="text" class="form-input" id="loginAccount" placeholder="请输入手机号或邮箱">
+          </div>
+          <div class="form-group">
+            <label class="form-label">密码</label>
+            <input type="password" class="form-input" id="loginPwd" placeholder="请输入密码">
+          </div>
+          <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+              <input type="checkbox" id="rememberMe"> 下次自动登录
+            </label>
+            <a href="#" style="font-size: 0.85rem; color: var(--accent); text-decoration: none;">忘记密码？</a>
+          </div>
+          <button type="button" class="btn-login" id="pwdLoginBtn">登 录</button>
+
+          <div class="divider">其他登录方式</div>
+
+          <div class="social-login">
+            <button class="btn-social btn-wechat">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.269-.03-.406-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
+              </svg>
+              微信登录
+            </button>
+          </div>
+        </div>
+
+        <p class="login-footer">
+          还没有账户？<a href="register.html">立即注册</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 标签切换
+    document.querySelectorAll('.login-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        if (this.dataset.tab === 'phone') {
+          document.getElementById('phoneLogin').style.display = 'block';
+          document.getElementById('passwordLogin').style.display = 'none';
+        } else {
+          document.getElementById('phoneLogin').style.display = 'none';
+          document.getElementById('passwordLogin').style.display = 'block';
+        }
+      });
+    });
+
+    // 发送验证码
+    let countdown = 0;
+    document.getElementById('sendCode').addEventListener('click', function() {
+      if (countdown > 0) return;
+      
+      const phone = document.getElementById('loginPhone').value;
+      if (!/^1[3-9]\d{9}$/.test(phone)) {
+        alert('请输入正确的手机号');
+        return;
+      }
+      
+      countdown = 60;
+      this.disabled = true;
+      this.textContent = countdown + '秒后重试';
+      
+      const timer = setInterval(() => {
+        countdown--;
+        if (countdown <= 0) {
+          clearInterval(timer);
+          this.disabled = false;
+          this.textContent = '获取验证码';
+        } else {
+          this.textContent = countdown + '秒后重试';
+        }
+      }, 1000);
+      
+      // 模拟发送验证码
+      console.log('发送验证码到: ' + phone);
+    });
+
+    // 手机登录
+    document.getElementById('phoneLoginBtn').addEventListener('click', function() {
+      const phone = document.getElementById('loginPhone').value;
+      const code = document.getElementById('loginCode').value;
+      
+      if (!phone || !code) {
+        alert('请填写完整信息');
+        return;
+      }
+      
+      // 模拟登录成功
+      this.textContent = '登录中...';
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1000);
+    });
+
+    // 密码登录
+    document.getElementById('pwdLoginBtn').addEventListener('click', function() {
+      const account = document.getElementById('loginAccount').value;
+      const pwd = document.getElementById('loginPwd').value;
+      
+      if (!account || !pwd) {
+        alert('请填写完整信息');
+        return;
+      }
+      
+      this.textContent = '登录中...';
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1000);
+    });
+
+    // 微信登录
+    document.getElementById('wechatLogin').addEventListener('click', function() {
+      // 模拟微信授权
+      alert('即将跳转微信授权页面...\n实际项目中请配置微信开放平台应用');
+    });
+  </script>
+</body>
+</html>
