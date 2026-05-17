@@ -1,0 +1,7 @@
+node_modules/
+.workbuddy/
+*.docx
+*.pptx
+*.b64
+.DS_Store
+Thumbs.db
