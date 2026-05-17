@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>成功案例 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="金奕鸣科技成功案例展示，覆盖电商、教育、金融等多个行业">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .page-header {
+      padding: 8rem 2rem 4rem;
+      background: var(--primary);
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+    }
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .case-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .case-stat {
+      text-align: center;
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .case-stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .case-stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .industry-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .industry-tab {
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .industry-tab:hover, .industry-tab.active {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .case-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    .case-header {
+      padding: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .case-logo {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      flex-shrink: 0;
+    }
+    .case-info h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+    .case-industry {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--background);
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .case-body {
+      padding: 0 2rem 2rem;
+    }
+    .case-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .case-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .metric-item {
+      text-align: center;
+      padding: 1rem;
+      background: var(--background);
+      border-radius: var(--radius);
+    }
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .case-tags {
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .case-tag {
+      padding: 0.25rem 0.75rem;
+      background: var(--background);
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    footer {
+      background: var(--primary);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    .service-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+    }
+    .service-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #07C160;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 16px rgba(7, 193, 96, 0.4);
+    }
+    @media (max-width: 968px) {
+      .nav-links { display: none; }
+      .case-stats { grid-template-columns: repeat(2, 1fr); }
+      .cases-grid { grid-template-columns: 1fr; }
+      .case-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="products.html">产品服务</a></li>
+        <li><a href="about.html">关于我们</a></li>
+        <li><a href="news.html">新闻动态</a></li>
+        <li><a href="platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>成功案例</h1>
+    <p>用技术创造价值，赋能企业数字化转型</p>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="index.html">首页</a> / 成功案例
+  </div>
+
+  <div class="section">
+    <div class="case-stats">
+      <div class="case-stat">
+        <div class="case-stat-number">50+</div>
+        <div class="case-stat-label">服务企业</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-number">98%</div>
+        <div class="case-stat-label">客户满意度</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-number">300%</div>
+        <div class="case-stat-label">平均效率提升</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-number">24h</div>
+        <div class="case-stat-label">平均响应速度</div>
+      </div>
+    </div>
+
+    <div class="industry-tabs">
+      <button class="industry-tab active">全部行业</button>
+      <button class="industry-tab">电商零售</button>
+      <button class="industry-tab">教育培训</button>
+      <button class="industry-tab">金融服务</button>
+      <button class="industry-tab">医疗健康</button>
+      <button class="industry-tab">制造生产</button>
+    </div>
+
+    <div class="cases-grid">
+      <article class="case-card">
+        <div class="case-header">
+          <div class="case-logo">🛒</div>
+          <div class="case-info">
+            <h3>厦门某电商平台</h3>
+            <span class="case-industry">电商零售</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <p class="case-desc">接入智能客服系统后，实现7×24小时自动化服务覆盖，人工客服工作量减少70%，同时客户响应速度提升至秒级。</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">70%</div>
+              <div class="metric-label">人力成本降低</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">96%</div>
+              <div class="metric-label">客户满意度</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">3个月</div>
+              <div class="metric-label">ROI回收期</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">智能客服</span>
+          <span class="case-tag">多轮对话</span>
+          <span class="case-tag">RPA自动化</span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-header">
+          <div class="case-logo">🎓</div>
+          <div class="case-info">
+            <h3>福州某教育集团</h3>
+            <span class="case-industry">教育培训</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <p class="case-desc">部署数据可视化平台，实时监控教学质量和运营数据，管理层决策效率提升200%，教学资源配置更加合理。</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">200%</div>
+              <div class="metric-label">决策效率提升</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">50+</div>
+              <div class="metric-label">数据看板数量</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">实时</div>
+              <div class="metric-label">数据更新频率</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">数据可视化</span>
+          <span class="case-tag">BI报表</span>
+          <span class="case-tag">数据大屏</span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-header">
+          <div class="case-logo">🏦</div>
+          <div class="case-info">
+            <h3>泉州某金融机构</h3>
+            <span class="case-industry">金融服务</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <p class="case-desc">通过RPA机器人实现贷款审批流程自动化，从3天缩短至2小时，错误率从5%降至0.1%，合规性显著提升。</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">95%</div>
+              <div class="metric-label">流程时间缩短</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">0.1%</div>
+              <div class="metric-label">错误率</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">10人</div>
+              <div class="metric-label">释放人力</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">RPA机器人</span>
+          <span class="case-tag">流程自动化</span>
+          <span class="case-tag">合规管理</span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-header">
+          <div class="case-logo">🏥</div>
+          <div class="case-info">
+            <h3>厦门某三甲医院</h3>
+            <span class="case-industry">医疗健康</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <p class="case-desc">搭建移动应用和云服务平台，实现患者在线预约挂号、病历查询等功能，患者平均等待时间从45分钟降至10分钟。</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">78%</div>
+              <div class="metric-label">等待时间降低</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">5万+</div>
+              <div class="metric-label">月活用户</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">99.9%</div>
+              <div class="metric-label">系统可用性</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">移动应用</span>
+          <span class="case-tag">云服务</span>
+          <span class="case-tag">微信小程序</span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-header">
+          <div class="case-logo">🏭</div>
+          <div class="case-info">
+            <h3>漳州某制造企业</h3>
+            <span class="case-industry">制造生产</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <p class="case-desc">部署MES系统与数据可视化平台，实时监控生产线状态，设备OEE从65%提升至82%，年节省成本约200万元。</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">26%</div>
+              <div class="metric-label">OEE提升</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">200万</div>
+              <div class="metric-label">年节省成本</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">6个月</div>
+              <div class="metric-label">投资回收期</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">MES系统</span>
+          <span class="case-tag">数据采集</span>
+          <span class="case-tag">设备监控</span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-header">
+          <div class="case-logo">🏢</div>
+          <div class="case-info">
+            <h3>厦门某连锁餐饮</h3>
+            <span class="case-industry">电商零售</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <p class="case-desc">定制企业官网和小程序，接入数据分析系统，线上订单占比从30%提升至65%，会员复购率提升40%。</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">117%</div>
+              <div class="metric-label">线上订单增长</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">40%</div>
+              <div class="metric-label">复购率提升</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">3个月</div>
+              <div class="metric-label">上线周期</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">官网定制</span>
+          <span class="case-tag">小程序</span>
+          <span class="case-tag">会员系统</span>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="legal.html">法律信息</a></p>
+  </footer>
+
+  <div class="service-float">
+    <button class="service-btn" onclick="window.location.href='tel:13599530881'" title="电话咨询">💬</button>
+  </div>
+</body>
+</html>

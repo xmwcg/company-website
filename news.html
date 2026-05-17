@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻动态 - 厦门金奕鸣科技有限公司</title>
+  <meta name="description" content="了解金奕鸣科技最新动态、行业资讯和技术分享">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing: border-box; }
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #2D2D2D;
+      --accent: #C9A84C;
+      --accent-light: #E5C76B;
+      --accent-dark: #A68A3A;
+      --background: #FAFAFA;
+      --surface: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #E5E5E5;
+      --radius: 4px;
+      --radius-md: 8px;
+      --font-display: 'Noto Serif SC', serif;
+      --font-body: 'Noto Sans SC', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .page-header {
+      padding: 8rem 2rem 4rem;
+      background: var(--primary);
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+    }
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .breadcrumb {
+      padding: 1rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .news-filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+    }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .news-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .news-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+    }
+    .news-image {
+      height: 180px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(255,255,255,0.2);
+    }
+    .news-content {
+      padding: 1.5rem;
+    }
+    .news-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .news-category {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .news-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+    .news-card h3 a {
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .news-card h3 a:hover { color: var(--accent); }
+    .news-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .news-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .news-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .read-more {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .read-more:hover { color: var(--accent-dark); }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+    }
+    .pagination a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .pagination a:hover, .pagination a.active {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+    }
+    footer {
+      background: var(--primary);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+    .service-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+    }
+    .service-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #07C160;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 16px rgba(7, 193, 96, 0.4);
+    }
+    @media (max-width: 968px) {
+      .nav-links { display: none; }
+      .news-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .news-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">金<span>奕</span>鸣科技</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="products.html">产品服务</a></li>
+        <li><a href="about.html">关于我们</a></li>
+        <li><a href="news.html" class="active">新闻动态</a></li>
+        <li><a href="platform/login.html" style="color: var(--accent);">客户平台</a></li>
+      </ul>
+      <a href="tel:13599530881" class="btn btn-accent">📞 联系我们</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>新闻动态</h1>
+    <p>了解行业最新资讯与技术洞察</p>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="index.html">首页</a> / 新闻动态
+  </div>
+
+  <div class="section">
+    <div class="news-filters">
+      <button class="filter-btn active">全部</button>
+      <button class="filter-btn">公司新闻</button>
+      <button class="filter-btn">行业资讯</button>
+      <button class="filter-btn">技术分享</button>
+      <button class="filter-btn">客户案例</button>
+    </div>
+
+    <div class="news-grid">
+      <article class="news-card">
+        <div class="news-image">📰</div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category">公司新闻</span>
+            <span>阅读量 1.2k</span>
+          </div>
+          <h3><a href="news-detail-ai-launch.html">金奕鸣科技发布新一代智能客服系统，集成GPT-4能力</a></h3>
+          <p>全新升级的智能客服系统支持多轮对话、情感识别和知识图谱检索，响应速度提升50%，为企业提供更智能的客户体验。</p>
+        </div>
+        <div class="news-footer">
+          <span class="news-date">2026-05-10</span>
+          <a href="news-detail-ai-launch.html" class="read-more">阅读更多 →</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">🤖</div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category">行业资讯</span>
+            <span>阅读量 980</span>
+          </div>
+          <h3><a href="news-detail-rpa-trend.html">2026年RPA行业趋势：智能化与自动化深度融合</a></h3>
+          <p>随着大语言模型的快速发展，RPA正在从简单的流程自动化向智能决策支持演进，企业效率提升迎来新机遇。</p>
+        </div>
+        <div class="news-footer">
+          <span class="news-date">2026-05-08</span>
+          <a href="news-detail-rpa-trend.html" class="read-more">阅读更多 →</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">📊</div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category">技术分享</span>
+            <span>阅读量 756</span>
+          </div>
+          <h3><a href="news-detail-dataviz-guide.html">企业数据可视化实践指南：从数据采集到决策支持</a></h3>
+          <p>本文详细介绍企业级数据可视化平台的架构设计、技术选型和最佳实践，帮助企业构建高效的数据分析体系。</p>
+        </div>
+        <div class="news-footer">
+          <span class="news-date">2026-05-05</span>
+          <a href="news-detail-dataviz-guide.html" class="read-more">阅读更多 →</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">🏢</div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category">客户案例</span>
+            <span>阅读量 1.5k</span>
+          </div>
+          <h3><a href="news-detail-ec-case.html">某电商平台接入智能客服系统，客服效率提升300%</a></h3>
+          <p>通过金奕鸣科技的智能客服解决方案，该电商平台实现7×24小时服务覆盖，人工客服工作量减少70%，客户满意度提升至96%。</p>
+        </div>
+        <div class="news-footer">
+          <span class="news-date">2026-04-28</span>
+          <a href="news-detail-ec-case.html" class="read-more">阅读更多 →</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">☁️</div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category">行业资讯</span>
+            <span>阅读量 623</span>
+          </div>
+          <h3><a href="news-detail-cloud-migration.html">企业云迁移指南：如何选择适合的云服务架构</a></h3>
+          <p>从本地部署到云端迁移，企业需要考虑成本、安全性、扩展性等多方面因素。本文提供实用的云架构选型建议。</p>
+        </div>
+        <div class="news-footer">
+          <span class="news-date">2026-04-22</span>
+          <a href="news-detail-cloud-migration.html" class="read-more">阅读更多 →</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">🎓</div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category">公司新闻</span>
+            <span>阅读量 892</span>
+          </div>
+          <h3><a href="news-detail-training.html">金奕鸣科技推出企业AI培训服务，助力团队数字化转型</a></h3>
+          <p>针对企业AI应用落地难题，我们推出定制化培训课程，涵盖AI基础知识、工具使用和实战演练，帮助企业快速掌握AI能力。</p>
+        </div>
+        <div class="news-footer">
+          <span class="news-date">2026-04-15</span>
+          <a href="news-detail-training.html" class="read-more">阅读更多 →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="pagination">
+      <a href="#" class="active">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">下一页 →</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="index.html">厦门金奕鸣科技有限公司</a> | 闽ICP备20260001号 | <a href="legal.html">法律信息</a></p>
+  </footer>
+
+  <div class="service-float">
+    <button class="service-btn" onclick="window.location.href='tel:13599530881'" title="电话咨询">💬</button>
+  </div>
+</body>
+</html>
